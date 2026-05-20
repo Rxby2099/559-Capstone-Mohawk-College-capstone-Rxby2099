@@ -1,0 +1,49 @@
+form {
+    max-width: 400px;
+    padding: 32px;
+    border: 1px solid #CA3500;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555555;
+    margin-bottom: 6px;
+  }
+
+  input{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 14px;
+    border:  1px solid #555555;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #CA3500;
+    box-shadow: 0 0 0 3px #CA350026;
+  }
+
+  button {
+    width: 100%;
+    padding: 9px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+  }
+
+  button:hover {
+    background: #ffffff;
+    color: #CA3500;
+    border: 1px solid #CA3500;
+  }
+  
+  div {
+    margin-bottom: 20px;
+  }
+
