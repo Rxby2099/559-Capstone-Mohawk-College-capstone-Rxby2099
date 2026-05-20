@@ -1,49 +1,85 @@
+@import url('https://fonts.cdnfonts.com/css/saiyan-sans');
+
 form {
     max-width: 400px;
     padding: 32px;
     border: 1px solid #CA3500;
     border-radius: 8px;
     background: #ffffff;
-  }
+}
 
-  label {
+#loginForm label {
     display: block;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 500;
-    color: #555555;
+    color: #CA3500;
     margin-bottom: 6px;
-  }
+}
 
-  input{
+#loginForm input{
     width: 100%;
     box-sizing: border-box;
     padding: 8px 10px;
     font-size: 14px;
     border:  1px solid #555555;
-  }
+    border-radius: 8px;
+}
 
-  input:focus {
-    outline: none;
-    border-color: #CA3500;
-    box-shadow: 0 0 0 3px #CA350026;
-  }
+#loginForm input:focus {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 14px;
+    border:  1px solid #555555;
+    border-radius: 8px;
+}
 
-  button {
+#loginForm button {
     width: 100%;
     padding: 9px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 500;
     color: #ffffff;
     background-color: #CA3500 ;
-  }
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
 
-  button:hover {
+#loginForm button:hover {
     background: #ffffff;
     color: #CA3500;
     border: 1px solid #CA3500;
-  }
+}
   
-  div {
+#loginForm div {
     margin-bottom: 20px;
-  }
+}
+
+#registrationLink{
+    text-align: center;
+}
+
+#forgotPasswordLink{
+    text-align: right;
+}
+
+#loginForm a{
+    color: #CA3500;
+    font-size: 11px;
+}
+
+#loginForm a:hover{
+    color:#6c1d00 ;
+}
+
+#loginForm p{
+    font-size: 11px;
+}
+
+#loginForm #titleText{
+    text-align: center;
+    font-family: 'Saiyan Sans', sans-serif;
+    font-size: 40px;
+    color: #CA3500;
+}
 

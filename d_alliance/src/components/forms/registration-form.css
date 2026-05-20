@@ -1,0 +1,61 @@
+@import url('https://fonts.cdnfonts.com/css/saiyan-sans');
+
+form {
+    max-width: 400px;
+    padding: 32px;
+    border: 1px solid #CA3500;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+#registrationForm label {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    color: #CA3500;
+    margin-bottom: 6px;
+}
+
+#registrationForm input{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 14px;
+    border:  1px solid #555555;
+    border-radius: 8px;
+}
+
+#registrationForm input:focus {
+    outline: none;
+    border-color: #CA3500;
+    box-shadow: 0 0 0 3px #CA350026;
+}
+
+#registrationForm button {
+    width: 100%;
+    padding: 9px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
+
+#registrationForm button:hover {
+    background: #ffffff;
+    color: #CA3500;
+    border: 1px solid #CA3500;
+}
+
+#registrationForm div {
+    margin-bottom: 20px;
+}
+
+#titleText{
+    text-align: center;
+    font-family: 'Saiyan Sans', sans-serif;
+    font-size: 40px;
+    color: #CA3500;
+}
+
