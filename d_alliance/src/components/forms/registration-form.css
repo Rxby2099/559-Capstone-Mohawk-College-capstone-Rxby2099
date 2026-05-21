@@ -25,7 +25,7 @@ form {
     border-radius: 8px;
 }
 
-#registrationForm input:focus {
+input:focus {
     outline: none;
     border-color: #CA3500;
     box-shadow: 0 0 0 3px #CA350026;

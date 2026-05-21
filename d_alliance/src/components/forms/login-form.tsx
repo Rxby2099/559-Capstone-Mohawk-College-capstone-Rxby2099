@@ -9,16 +9,16 @@ export default function LoginForm() {
                 </div>
 
                 <div id = "usernameSection">
-                    <label htmlFor ="userOrEmail">Username/Email</label>
+                    <label htmlFor ="userOrEmail">Username/Email:</label>
                     <input type = "text" id = "userOrEmail" name = "userOrEmail" autoComplete = "Enter Username/Email" placeholder="Enter Username/Email" spellCheck = "false"/>
                 </div>
 
                 <div id = "passwordSection">
-                    <label htmlFor = "password">Password</label>
+                    <label htmlFor = "password">Password:</label>
                     <input type = "text" id = "password" name = "password" autoComplete = "Enter password" placeholder="Enter Password"
                     />
                     <div id = "forgotPasswordLink">
-                        <a>Forgot password?</a>
+                        <a href="#">Forgot password?</a>
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@ export default function LoginForm() {
                 </div>
 
                 <div id = "registrationLink">
-                    <p>New to Dokkan Alliance? <a>Sign Up</a></p>
+                    <p>New to Dokkan Alliance? <a href="#">Sign Up</a></p>
                 </div>
                 
             </form>

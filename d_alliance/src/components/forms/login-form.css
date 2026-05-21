@@ -25,7 +25,7 @@ form {
     border-radius: 8px;
 }
 
-#loginForm input:focus {
+input:focus {
     width: 100%;
     box-sizing: border-box;
     padding: 8px 10px;
