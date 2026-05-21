@@ -6,6 +6,15 @@ form {
     border: 1px solid #CA3500;
     border-radius: 8px;
     background: #ffffff;
+    width: 100%;
+    max-width: 500px;
+}
+
+#loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 #loginForm label {
@@ -81,5 +90,6 @@ input:focus {
     font-family: 'Saiyan Sans', sans-serif;
     font-size: 40px;
     color: #CA3500;
+    letter-spacing: 1px;
 }
 

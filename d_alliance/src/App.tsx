@@ -4,6 +4,7 @@ import TestFunc from './components/test'
 import LoginForm from './components/forms/login-form'
 import RegistrationForm from './components/forms/registration-page'
 import Header from './components/header-&-footer/header'
+import Footer from './components/header-&-footer/footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,8 @@ function App() {
   return (
     <>
       <Header />
+      <LoginForm />
+      <Footer />
     </>
   )
 }

@@ -1,0 +1,45 @@
+@import url('https://fonts.cdnfonts.com/css/saiyan-sans');
+
+footer {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #CA3500;
+    padding: 0 20px;
+}
+
+#navBar{
+    padding-left: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+  
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+nav li a:hover {
+    color: #6c1d00;
+    text-decoration: underline #6c1d00;
+}
+
+nav li p {
+    display: block;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+}
