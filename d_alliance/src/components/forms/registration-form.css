@@ -5,7 +5,7 @@ form {
     padding: 32px;
     border: 1px solid #CA3500;
     border-radius: 8px;
-    background: #ffffff;
+    background-color: #b8e4f9 !important;
     width: 100%;
     max-width: 500px;
 }
@@ -32,6 +32,7 @@ form {
     font-size: 14px;
     border:  1px solid #555555;
     border-radius: 8px;
+    background-color: #ccecfb;
 }
 
 input:focus {

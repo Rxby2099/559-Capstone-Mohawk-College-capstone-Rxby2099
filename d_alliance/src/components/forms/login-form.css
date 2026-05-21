@@ -1,13 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/saiyan-sans');
 
 form {
-    max-width: 400px;
-    padding: 32px;
-    border: 1px solid #CA3500;
-    border-radius: 8px;
-    background: #ffffff;
-    width: 100%;
     max-width: 500px;
+    padding: 32px;
+    border: 2px solid #CA3500;
+    border-radius: 8px;
+    background-color: #b8e4f9 !important;
+    width: 100%;
 }
 
 #loginForm {
@@ -32,6 +31,7 @@ form {
     font-size: 14px;
     border:  1px solid #555555;
     border-radius: 8px;
+    background-color: #ccecfb;
 }
 
 input:focus {
