@@ -1,3 +1,4 @@
+
 import "./login-form.css"
 export default function LoginForm() {
     return (
@@ -27,7 +28,7 @@ export default function LoginForm() {
                 </div>
 
                 <div id = "registrationLink">
-                    <p>New to Dokkan Alliance? <a href="#">Sign Up</a></p>
+                    <p>New to Dokkan Alliance? <a id ="registerLink" href= ".\registrationpage\registrationpage.tsx" >Sign Up</a></p>
                 </div>
                 
             </form>
