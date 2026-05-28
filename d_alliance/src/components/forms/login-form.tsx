@@ -1,22 +1,58 @@
 
 import "./login-form.css"
+import supabase from '@/supabase-frontend'
+import { useState } from "react"
 export default function LoginForm() {
+    const [loginData, setLoginData] = useState({email: '', password: ''});
+
+    async function handleUserLogin(e: React.FormEvent){
+        e.preventDefault();
+
+        const {data, error} = await supabase.auth.signInWithPassword({
+            email: loginData.email,
+            password: loginData.password
+        });
+
+        if (error){
+            console.error('Error signing in: ', error);
+            return;
+        }
+
+        console.log('User Signed in successfully: ', data);
+    }
+
     return (
         <div id = "loginForm">
-            <form>
+            <form onSubmit={handleUserLogin}>
 
                 <div>
                     <p id = "titleText">Login</p>
                 </div>
 
                 <div id = "usernameSection">
-                    <label htmlFor ="userOrEmail">Username/Email:</label>
-                    <input type = "text" id = "userOrEmail" name = "userOrEmail" autoComplete = "Enter Username/Email" placeholder="Enter Username/Email" spellCheck = "false"/>
+                    <label htmlFor ="email">Email:</label>
+                    <input 
+                        type = "text" 
+                        id = "email" 
+                        name = "email" 
+                        autoComplete = "Enter Email" 
+                        placeholder="Enter Email" 
+                        spellCheck = "false"
+                        value = {loginData.email}
+                        onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                    />
                 </div>
 
                 <div id = "passwordSection">
                     <label htmlFor = "password">Password:</label>
-                    <input type = "text" id = "password" name = "password" autoComplete = "Enter password" placeholder="Enter Password"
+                    <input 
+                        type = "password" 
+                        id = "password" 
+                        name = "password" 
+                        autoComplete = "Enter password" 
+                        placeholder="Enter Password"
+                        value = {loginData.password}
+                        onChange={(e) => setLoginData({...loginData, password: e.target.value})}
                     />
                     <div id = "forgotPasswordLink">
                         <a href="#">Forgot password?</a>
@@ -25,10 +61,6 @@ export default function LoginForm() {
 
                 <div id = "loginButton">
                     <button type="submit">Sign in</button>
-                </div>
-
-                <div id = "registrationLink">
-                    <p>New to Dokkan Alliance? <a id ="registerLink" href= ".\registrationpage\registrationpage.tsx" >Sign Up</a></p>
                 </div>
                 
             </form>

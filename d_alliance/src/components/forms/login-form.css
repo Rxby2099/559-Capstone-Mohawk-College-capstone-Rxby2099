@@ -64,10 +64,6 @@ input:focus {
     margin-bottom: 20px;
 }
 
-#registrationLink{
-    text-align: center;
-}
-
 #forgotPasswordLink{
     text-align: right;
 }

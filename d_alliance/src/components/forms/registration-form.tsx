@@ -1,8 +1,10 @@
 import "./registration-form.css"
 import { useState } from "react"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function RegistrationForm() {
     const [registrationData, setRegistrationData] = useState({ email: '', username: '', password: ''});
+    const [showPassword, setShowPassword] = useState(false);
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
         const resp = await fetch("http://localhost:8000/signup", {
@@ -53,24 +55,32 @@ export default function RegistrationForm() {
                     <div>
                         <label htmlFor = "password1">Password:</label>
                         <input 
-                            type = "text" 
+                            type={showPassword ? "text" : "password"}
                             id = "password1" 
                             name = "password1" 
                             autoComplete = "Enter Password" placeholder="Enter Password"
                             value = {registrationData.password}
                             onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})}
                         />
+                        <button id = "passwordToggle" onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
                     </div>
 
                     <div>
                         <label htmlFor = "password2">Re-Enter Password:</label>
-                        <input type = "text" id = "password2" name = "password2" autoComplete = "Re-Enter Password" placeholder="Re-Enter Password"
+                        <input 
+                            type = "password" 
+                            id = "password2" 
+                            name = "password2" 
+                            autoComplete = "Re-Enter Password" 
+                            placeholder="Re-Enter Password"
                         />
                     </div>
                 </div>
 
                 <div id = "registerButton">
-                    <button type="submit">Register</button>
+                    <button id = "submitButton" type="submit">Register</button>
                 </div>
                 
             </form>
