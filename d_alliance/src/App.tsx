@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-import LoginPage from './components/loginpage/loginpage'
 import { useEffect } from 'react'
 import supabase from './supabase-frontend'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+
+import LoginPage from './components/loginpage/loginpage'
+import LandingPage from './components/LandingPage/landingpage'
 
 function App() {
 
@@ -20,9 +23,13 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <LoginPage />
-    </>
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/dashboard" element={<LandingPage />} />
+        </Routes>
+    </BrowserRouter>
   )
 }
 

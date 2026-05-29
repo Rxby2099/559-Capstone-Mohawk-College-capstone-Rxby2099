@@ -2,10 +2,13 @@
 import "./login-form.css"
 import supabase from '@/supabase-frontend'
 import { useState } from "react"
+import {useNavigate} from "react-router-dom"
+
 export default function LoginForm() {
     const [loginData, setLoginData] = useState({email: '', password: ''});
+    const navigate = useNavigate()
 
-    async function handleUserLogin(e: React.FormEvent){
+    async function handleUserLogin(e: React.FormEvent){    
         e.preventDefault();
 
         const {data, error} = await supabase.auth.signInWithPassword({
@@ -18,6 +21,7 @@ export default function LoginForm() {
             return;
         }
 
+        navigate("/dashboard");
         console.log('User Signed in successfully: ', data);
     }
 
