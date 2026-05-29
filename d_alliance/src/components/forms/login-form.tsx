@@ -1,11 +1,13 @@
 
 import "./login-form.css"
+import { Eye, EyeOff } from "lucide-react"
 import supabase from '@/supabase-frontend'
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
 
 export default function LoginForm() {
     const [loginData, setLoginData] = useState({email: '', password: ''});
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 
     async function handleUserLogin(e: React.FormEvent){    
@@ -39,6 +41,7 @@ export default function LoginForm() {
                         type = "text" 
                         id = "email" 
                         name = "email" 
+                        maxLength={254}
                         autoComplete = "Enter Email" 
                         placeholder="Enter Email" 
                         spellCheck = "false"
@@ -49,15 +52,22 @@ export default function LoginForm() {
 
                 <div id = "passwordSection">
                     <label htmlFor = "password">Password:</label>
-                    <input 
-                        type = "password" 
-                        id = "password" 
-                        name = "password" 
-                        autoComplete = "Enter password" 
-                        placeholder="Enter Password"
-                        value = {loginData.password}
-                        onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                    />
+                    <div id = "passwordAndEye">
+                        <input 
+                            type={showPassword ? "text" : "password"}
+                            id = "password" 
+                            name = "password" 
+                            autoComplete = "Enter password" 
+                            placeholder="Enter Password"
+                            value = {loginData.password}
+                            onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                        />
+                        <button id = "passwordToggle" type="button" onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
+                    
+
                     <div id = "forgotPasswordLink">
                         <a href="#">Forgot password?</a>
                     </div>

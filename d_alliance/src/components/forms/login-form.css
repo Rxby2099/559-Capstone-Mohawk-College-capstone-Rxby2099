@@ -59,6 +59,17 @@ input:focus {
     color: #CA3500;
     border: 1px solid #CA3500;
 }
+
+#passwordToggle {
+    width: auto !important;
+    padding: 6px 8px;
+}
+
+#passwordAndEye {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
   
 #loginForm div {
     margin-bottom: 20px;

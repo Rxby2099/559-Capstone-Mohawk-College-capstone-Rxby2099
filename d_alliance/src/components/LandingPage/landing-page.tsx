@@ -1,6 +1,7 @@
+import '../background.css'
+
 import Header from '../header-&-footer/header'
 import Footer from '../header-&-footer/footer'
-import './ladningpage.css'
 
 export default function LandingPage() {
 

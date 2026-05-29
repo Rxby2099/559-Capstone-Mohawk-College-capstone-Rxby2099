@@ -1,8 +1,10 @@
-import "./loginpage.css"
+import "../background.css"
+
 import LoginForm from "../forms/login-form"
 import RegistrationForm from "../forms/registration-form"
 import Header from "../header-&-footer/header"
 import Footer from '../header-&-footer/footer'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 
 

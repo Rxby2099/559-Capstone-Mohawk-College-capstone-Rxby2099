@@ -1,10 +1,14 @@
 import "./registration-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
+import {useNavigate} from "react-router-dom"
 
 export default function RegistrationForm() {
+
     const [registrationData, setRegistrationData] = useState({ email: '', username: '', password: ''});
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate()
+
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
         const resp = await fetch("http://localhost:8000/signup", {
@@ -12,8 +16,14 @@ export default function RegistrationForm() {
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(registrationData)
         });
+
         const data = await resp.json();
         console.log("Registrtion response:", data);
+
+        if (resp.ok) {
+            window.location.reload();
+        } 
+        
     }
     
     return (
@@ -31,6 +41,7 @@ export default function RegistrationForm() {
                         type = "text" 
                         id = "email" 
                         name = "email" 
+                        maxLength={254}
                         autoComplete = "Enter Email" 
                         placeholder="Enter Email" 
                         spellCheck = "false"
@@ -45,7 +56,9 @@ export default function RegistrationForm() {
                         type = "text" 
                         id = "username" 
                         name = "username" 
-                        autoComplete = "Enter Username" placeholder="Enter Username" 
+                        maxLength={20}
+                        autoComplete = "Enter Username" 
+                        placeholder="Enter Username" 
                         spellCheck = "false" 
                         value = {registrationData.username}
                         onChange={(e) => setRegistrationData({...registrationData, username: e.target.value})}/>
@@ -54,25 +67,33 @@ export default function RegistrationForm() {
                 <div id = "passwordSection">
                     <div>
                         <label htmlFor = "password1">Password:</label>
-                        <input 
-                            type={showPassword ? "text" : "password"}
-                            id = "password1" 
-                            name = "password1" 
-                            autoComplete = "Enter Password" placeholder="Enter Password"
-                            value = {registrationData.password}
-                            onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})}
-                        />
-                        <button id = "passwordToggle" onClick={() => setShowPassword(!showPassword)}>
-                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
+                        <div id = "passwordAndEye">
+                            <input 
+                                type={showPassword ? "text" : "password"}
+                                id = "password1" 
+                                name = "password1" 
+                                minLength={8}
+                                maxLength={64}
+                                autoComplete = "Enter Password" placeholder="Enter Password"
+                                value = {registrationData.password}
+                                onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})}
+                                
+                            />
+                            <button id = "passwordToggle" type="button" onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+                        
                     </div>
 
                     <div>
                         <label htmlFor = "password2">Re-Enter Password:</label>
                         <input 
-                            type = "password" 
+                            type={showPassword ? "text" : "password"}
                             id = "password2" 
                             name = "password2" 
+                            minLength={8}
+                            maxLength={64}
                             autoComplete = "Re-Enter Password" 
                             placeholder="Re-Enter Password"
                         />

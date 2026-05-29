@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import supabase from './supabase-frontend'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
-import LoginPage from './components/loginpage/loginpage'
-import LandingPage from './components/LandingPage/landingpage'
+import LoginPage from './components/loginpage/login-page'
+import LandingPage from './components/LandingPage/landing-page'
 
 function App() {
 
@@ -28,6 +28,8 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<LandingPage />} />
+            
+
         </Routes>
     </BrowserRouter>
   )
