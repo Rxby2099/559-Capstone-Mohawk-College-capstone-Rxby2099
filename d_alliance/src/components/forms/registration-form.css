@@ -1,9 +1,8 @@
 @import url('https://fonts.cdnfonts.com/css/saiyan-sans');
 
 form {
-    max-width: 400px;
     padding: 32px;
-    border: 1px solid #CA3500;
+    border: 2px solid #CA3500;
     border-radius: 8px;
     background-color: #b8e4f9 !important;
     width: 100%;
@@ -78,5 +77,9 @@ input:focus {
     font-size: 40px;
     color: #CA3500;
     letter-spacing: 1px;
+}
+
+#passwordErrorStr{
+    color: red;
 }
 

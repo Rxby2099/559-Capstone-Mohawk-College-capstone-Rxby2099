@@ -7,8 +7,12 @@ export default function RegistrationForm() {
     const [registrationData, setRegistrationData] = useState({ email: '', username: '', password: ''});
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+    const [password2, setPassword2] = useState('');
+    const [missingFields, setMissingFields] = useState('');
+    const [noMatch, setNoMatch] = useState('');
     
-
+    //Password Validation constants
+    const [hasError, setHasError] = useState(false);
     const digit = /[0-9]/
     const uppercase = /[A-Z]/
     const lowercase = /[a-z]/
@@ -18,6 +22,36 @@ export default function RegistrationForm() {
 
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
+
+        if(!digit.test(registrationData.password) ||
+            !uppercase.test(registrationData.password) || 
+            !lowercase.test(registrationData.password) ||
+            !nonAlphanumeric.test(registrationData.password)){
+            
+                setMissingFields("Password must contain 1: uppercase letter, lowercase letter, number and symbol!");
+                setHasError(true);
+                
+        }
+
+        else{
+            setMissingFields("");
+            setHasError(false);
+        }
+
+        if (password2 != registrationData.password){
+            setNoMatch("Passwords must match!");
+            setHasError(true);
+        }
+
+        else{
+            setNoMatch("");
+            setHasError(false);
+        }
+
+        if(hasError){
+            return;
+        }
+
         const resp = await fetch("http://localhost:8000/signup", {
             method: "POST",
             headers: { 'Content-Type': 'application/json'},
@@ -90,7 +124,7 @@ export default function RegistrationForm() {
                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        <p id = "missingFieldsStr"></p>
+                        <p id = "passwordErrorStr">{missingFields}</p>
                     </div>
 
                     <div>
@@ -104,12 +138,14 @@ export default function RegistrationForm() {
                                 maxLength={64}
                                 autoComplete = "Re-Enter Password" 
                                 placeholder="Re-Enter Password"
+                                value={password2}
+                                onChange={(e) => setPassword2(e.target.value)}
                             />
                             <button id = "passwordToggle" type="button" onClick={() => setShowPassword2(!showPassword2)}>
                                 {showPassword2 ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        <p id = "missingFieldsStr"></p>
+                        <p id = "passwordErrorStr">{noMatch}</p>
                     </div>
                 </div>
 
