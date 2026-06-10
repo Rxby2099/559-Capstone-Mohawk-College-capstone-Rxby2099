@@ -1,13 +1,20 @@
 import "./registration-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import {useNavigate} from "react-router-dom"
 
 export default function RegistrationForm() {
 
     const [registrationData, setRegistrationData] = useState({ email: '', username: '', password: ''});
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate()
+    const [showPassword2, setShowPassword2] = useState(false);
+    
+
+    const digit = /[0-9]/
+    const uppercase = /[A-Z]/
+    const lowercase = /[a-z]/
+    const nonAlphanumeric = /[^0-9A-Za-z]/
+    
+    
 
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
@@ -83,20 +90,26 @@ export default function RegistrationForm() {
                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        
+                        <p id = "missingFieldsStr"></p>
                     </div>
 
                     <div>
                         <label htmlFor = "password2">Re-Enter Password:</label>
-                        <input 
-                            type={showPassword ? "text" : "password"}
-                            id = "password2" 
-                            name = "password2" 
-                            minLength={8}
-                            maxLength={64}
-                            autoComplete = "Re-Enter Password" 
-                            placeholder="Re-Enter Password"
-                        />
+                        <div id = "passwordAndEye">
+                            <input 
+                                type={showPassword2 ? "text" : "password"}
+                                id = "password2" 
+                                name = "password2" 
+                                minLength={8}
+                                maxLength={64}
+                                autoComplete = "Re-Enter Password" 
+                                placeholder="Re-Enter Password"
+                            />
+                            <button id = "passwordToggle" type="button" onClick={() => setShowPassword2(!showPassword2)}>
+                                {showPassword2 ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
+                        <p id = "missingFieldsStr"></p>
                     </div>
                 </div>
 

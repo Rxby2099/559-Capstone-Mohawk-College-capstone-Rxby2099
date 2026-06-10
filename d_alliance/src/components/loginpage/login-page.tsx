@@ -1,4 +1,5 @@
 import "../background.css"
+import "./login-page.css"
 
 import LoginForm from "../forms/login-form"
 import RegistrationForm from "../forms/registration-form"
