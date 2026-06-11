@@ -10,7 +10,6 @@ form {
 }
 
 #registrationForm {
-    display: flex;
     justify-content: center;
 }
 
@@ -81,5 +80,7 @@ input:focus {
 
 #passwordErrorStr{
     color: red;
+    font-family: sans-serif;
+    font-size: 12px;
 }
 

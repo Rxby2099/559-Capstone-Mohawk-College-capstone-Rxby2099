@@ -4,3 +4,7 @@
     align-items: center;
     padding-top: 80px;
 }
+
+#authForm [role="tablist"] {
+    margin: 0 auto;
+}

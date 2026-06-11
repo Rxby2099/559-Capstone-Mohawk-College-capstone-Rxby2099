@@ -11,7 +11,11 @@
         "./src/*"
       ]
     },
-    "types": ["vite/client"],
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom",
+      "vite/client"
+    ],
     "skipLibCheck": true,
 
     /* Bundler mode */
