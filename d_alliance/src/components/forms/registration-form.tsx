@@ -124,7 +124,7 @@ export default function RegistrationForm() {
                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        <p id = "passwordErrorStr">{missingFields}</p>
+                        <p id = "passwordErrorStr" title = "errorMsg">{missingFields}</p>
                     </div>
 
                     <div>
@@ -145,12 +145,12 @@ export default function RegistrationForm() {
                                 {showPassword2 ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
-                        <p id = "passwordErrorStr">{noMatch}</p>
+                        <p id = "passwordErrorStr" title = "errorMsgPass2">{noMatch}</p>
                     </div>
                 </div>
 
                 <div id = "registerButton">
-                    <button id = "submitButton" type="submit">Register</button>
+                    <button id = "submitButton" title = "subBtn" type="submit">Register</button>
                 </div>
                 
             </form>
