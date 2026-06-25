@@ -12,7 +12,6 @@ export default function RegistrationForm() {
     const [noMatch, setNoMatch] = useState('');
     
     //Password Validation constants
-    const [hasError, setHasError] = useState(false);
     const digit = /[0-9]/
     const uppercase = /[A-Z]/
     const lowercase = /[a-z]/
@@ -20,6 +19,7 @@ export default function RegistrationForm() {
     
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
+        let error = false;
 
 
         if(!digit.test(registrationData.password) ||
@@ -30,26 +30,24 @@ export default function RegistrationForm() {
             registrationData.password.length > 64 ){
             
                 setMissingFields("Password must contain 1: uppercase letter, lowercase letter, number and symbol!");
-                setHasError(true);
+                error = true;
                 
         }
 
         else{
             setMissingFields("");
-            setHasError(false);
         }
 
         if (password2 != registrationData.password){
             setNoMatch("Passwords must match!");
-            setHasError(true);
+            error = true;
         }
 
         else{
             setNoMatch("");
-            setHasError(false);
         }
 
-        if(hasError){
+        if(error){
             return;
         }
 
@@ -60,10 +58,10 @@ export default function RegistrationForm() {
         });
 
         const data = await resp.json();
-        console.log("Registrtion response:", data);
+        console.log("Registration response:", data);
 
         if (resp.ok) {
-            window.location.reload();
+           // window.location.reload();
         } 
         
     }

@@ -16,6 +16,7 @@ app.post('/signup', async(req, resp) => {
         password: password
     });
 
+
     if(error){
         console.error('Erorr registering user:', error);
         return resp.status(400).json({message: 'Registration failed', error: error.message });
@@ -39,7 +40,7 @@ app.post('/signup', async(req, resp) => {
     }
 
     console.log("Registration attempt: ", {username, email, password});
-    resp.json({message: "Successful registration"});
+    resp.json({message: "Successful registration", user: {id: data.user?.id, username, email}});
 
 });
 
