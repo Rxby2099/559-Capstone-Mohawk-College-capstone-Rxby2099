@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(135deg, #ffd4a8, #f0a085);
+    background: linear-gradient(135deg, #ffd4a8, #ed7914);
 }
 
 body, #root {
@@ -7,6 +7,7 @@ body, #root {
     display: flex;
     flex-direction: column;
     margin: 0;
+    padding: 0;
 }
 
 

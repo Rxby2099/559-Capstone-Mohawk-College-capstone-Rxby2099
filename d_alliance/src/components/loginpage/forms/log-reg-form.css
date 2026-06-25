@@ -1,5 +1,8 @@
 @import url('https://fonts.cdnfonts.com/css/saiyan-sans');
-
+body {
+    justify-content:center ;
+    display: flex;
+}
 form {
     padding: 32px;
     border: 2px solid #CA3500;
@@ -7,13 +10,10 @@ form {
     background-color: #b8e4f9 !important;
     width: 100%;
     max-width: 500px;
+    
 }
 
-#registrationForm {
-    justify-content: center;
-}
-
-#registrationForm label {
+label {
     display: block;
     font-size: 20px;
     font-weight: 500;
@@ -21,7 +21,7 @@ form {
     margin-bottom: 6px;
 }
 
-#registrationForm input{
+input{
     width: 100%;
     box-sizing: border-box;
     padding: 8px 10px;
@@ -37,7 +37,7 @@ input:focus {
     box-shadow: 0 0 0 3px #CA350026;
 }
 
-#registrationForm button {
+form button {
     width: 100%;
     padding: 9px;
     font-size: 20px;
@@ -46,6 +46,12 @@ input:focus {
     background-color: #CA3500 ;
     border-radius: 8px;
     border: 1px solid #ffffff;
+}
+
+form button:hover {
+    background: #ffffff;
+    color: #CA3500;
+    border: 1px solid #CA3500;
 }
 
 #passwordToggle {
@@ -59,14 +65,17 @@ input:focus {
     gap: 8px;
 }
 
-
-#registrationForm button:hover {
-    background: #ffffff;
-    color: #CA3500;
-    border: 1px solid #CA3500;
+#passwordErrorStr{
+    color: red;
+    font-family: sans-serif;
+    font-size: 12px;
 }
 
 #registrationForm div {
+    margin-bottom: 20px;
+}
+
+#loginForm div {
     margin-bottom: 20px;
 }
 
@@ -77,10 +86,25 @@ input:focus {
     color: #CA3500;
     letter-spacing: 1px;
 }
+  
+#loginForm div {
+    margin-bottom: 20px;
+}
 
-#passwordErrorStr{
-    color: red;
-    font-family: sans-serif;
-    font-size: 12px;
+#forgotPasswordLink{
+    text-align: right;
+}
+
+#loginForm a{
+    color: #CA3500;
+    font-size: 11px;
+}
+
+#loginForm a:hover{
+    color:#6c1d00 ;
+}
+
+#loginForm p{
+    font-size: 11px;
 }
 

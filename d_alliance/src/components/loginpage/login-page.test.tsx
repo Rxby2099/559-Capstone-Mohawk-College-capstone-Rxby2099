@@ -4,6 +4,7 @@ import {userEvent} from '@testing-library/user-event';
 
 
 
+
 describe("Login Page Testing", () => {
 
     describe("Login Form Testing", () => {
@@ -32,6 +33,9 @@ describe("Login Page Testing", () => {
             );
         })
     })
+
+
+
 
     describe("Registration Form Testing", () => {
 
@@ -74,7 +78,7 @@ describe("Login Page Testing", () => {
 
 
 
-        test("Testing a password that is meant to pass", async () => {
+        test("Testing a password that is valid", async () => {
             render(<LoginPage/>);
 
             await userEvent.click(
@@ -119,7 +123,7 @@ describe("Login Page Testing", () => {
 
 
 
-        test("Testing a confirmed password that is meant to pass", async () => {
+        test("Testing a confirmed password that is valid", async () => {
             render(<LoginPage/>);
 
             await userEvent.click(

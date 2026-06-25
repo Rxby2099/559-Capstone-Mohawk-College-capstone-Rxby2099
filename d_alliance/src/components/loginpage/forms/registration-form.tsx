@@ -1,4 +1,4 @@
-import "./registration-form.css"
+import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 
@@ -18,15 +18,16 @@ export default function RegistrationForm() {
     const lowercase = /[a-z]/
     const nonAlphanumeric = /[^0-9A-Za-z]/
     
-    
-
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
+
 
         if(!digit.test(registrationData.password) ||
             !uppercase.test(registrationData.password) || 
             !lowercase.test(registrationData.password) ||
-            !nonAlphanumeric.test(registrationData.password)){
+            !nonAlphanumeric.test(registrationData.password) || 
+            registrationData.password.length < 8 ||
+            registrationData.password.length > 64 ){
             
                 setMissingFields("Password must contain 1: uppercase letter, lowercase letter, number and symbol!");
                 setHasError(true);
@@ -72,14 +73,14 @@ export default function RegistrationForm() {
             <form onSubmit={handleRegistration}>
 
                 <div>
-                    <p id = "titleText">Registration</p>
+                    <h1 id = "titleText">Registration</h1>
                 </div>
 
                 <div id = "emailSection">
                     <label htmlFor ="email">Email:</label>
 
                     <input 
-                        type = "text" 
+                        type = "email" 
                         id = "email" 
                         name = "email" 
                         maxLength={254}
@@ -97,6 +98,7 @@ export default function RegistrationForm() {
                         type = "text" 
                         id = "username" 
                         name = "username" 
+                        minLength={3}
                         maxLength={20}
                         autoComplete = "Enter Username" 
                         placeholder="Enter Username" 

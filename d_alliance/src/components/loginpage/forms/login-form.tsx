@@ -1,5 +1,5 @@
 
-import "./login-form.css"
+import "./log-reg-form.css"
 import { Eye, EyeOff } from "lucide-react"
 import supabase from '@/supabase-frontend'
 import { useState } from "react"
@@ -32,7 +32,7 @@ export default function LoginForm() {
             <form onSubmit={handleUserLogin}>
 
                 <div>
-                    <p id = "titleText">Login</p>
+                    <h1 id = "titleText">Login</h1>
                 </div>
 
                 <div id = "usernameSection">
