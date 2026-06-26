@@ -1,9 +1,16 @@
 import LoginPage from "./login-page";
 import {render, screen} from '@testing-library/react';
 import {userEvent} from '@testing-library/user-event';
+import supabase from "@/supabase-frontend";
 
-
-
+vi.mock('@/supabase-frontend', () => ({
+    default: {
+        auth: {
+            signInWithPassword: vi.fn(),
+            onAuthStateChange: vi.fn()
+        }
+    }
+}));
 
 describe("Login Page Testing", () => {
 
@@ -68,13 +75,13 @@ describe("Login Page Testing", () => {
             const input = screen.getByLabelText("Password:");
             await userEvent.type(input, 'Password123');
 
-            const button = screen.getByTitle('subBtn')
+            const button = screen.getByTitle('subBtn');
 
-            await button.click()
+            await button.click();
 
-            expect(screen.getByTitle("errorMsg").textContent).toEqual("Password must contain 1: uppercase letter, lowercase letter, number and symbol!")
+            expect(screen.getByTitle("errorMsg").textContent).toEqual("Password must contain 1: uppercase letter, lowercase letter, number and symbol!");
 
-        })
+        });
 
 
 
@@ -90,11 +97,11 @@ describe("Login Page Testing", () => {
             const input = screen.getByLabelText("Password:");
             await userEvent.type(input, 'Password_123');
 
-            const button = screen.getByTitle('subBtn')
+            const button = screen.getByTitle('subBtn');
 
-            await button.click()
+            await button.click();
 
-            expect(screen.getByTitle("errorMsg").textContent).toEqual("")
+            expect(screen.getByTitle("errorMsg").textContent).toEqual("");
         })
 
 
@@ -114,11 +121,11 @@ describe("Login Page Testing", () => {
             const input2 = screen.getByLabelText("Re-Enter Password:");
             await userEvent.type(input2, 'Password123');
 
-            const button = screen.getByTitle('subBtn')
+            const button = screen.getByTitle('subBtn');
 
-            await button.click()
+            await button.click();
 
-            expect(screen.getByTitle("errorMsgPass2").textContent).toEqual("Passwords must match!")
+            expect(screen.getByTitle("errorMsgPass2").textContent).toEqual("Passwords must match!");
         })
 
 
@@ -138,12 +145,54 @@ describe("Login Page Testing", () => {
             const input2 = screen.getByLabelText("Re-Enter Password:");
             await userEvent.type(input2, 'Password_123');
 
-            const button = screen.getByTitle('subBtn')
+            const button = screen.getByTitle('subBtn');
 
-            await button.click()
+            await button.click();
 
-            expect(screen.getByTitle("errorMsgPass2").textContent).toEqual("")
+            expect(screen.getByTitle("errorMsgPass2").textContent).toEqual("");
         })
     })
+
+
+    describe("Mock user Registration and Login", () => {
+
+        test("Mock a successful user registration", async () => {
+            (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    message: "Successful registration", 
+                    user:{
+                        email: "email@email.com",
+                        username: "User123" 
+                    }
+                })
     
+            });
+
+            render(<LoginPage/>);
+    
+            await userEvent.click(
+                screen.getByRole("tab", {
+                    name: "Sign Up"
+                })
+            ); 
+    
+            await userEvent.type(screen.getByLabelText("Email:"), "email@email.com");
+            await userEvent.type(screen.getByLabelText("Username:"), "User123");
+            await userEvent.type(screen.getByLabelText("Password:"), "Password_123");
+            await userEvent.type(screen.getByLabelText("Re-Enter Password:"), "Password_123");
+            await userEvent.click(screen.getByTitle("subBtn"));
+    
+            expect((globalThis.fetch as ReturnType<typeof vi.fn>)).toHaveBeenCalledWith("http://localhost:8000/signup", expect.objectContaining({
+                method: "POST",
+                body: JSON.stringify({ 
+                    email: "email@email.com",
+                    username: "User123",
+                    password: "Password_123"
+                })
+            }));
+        });
+    });
+
+
 })
