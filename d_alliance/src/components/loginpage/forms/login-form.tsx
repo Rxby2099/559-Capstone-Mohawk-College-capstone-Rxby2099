@@ -5,11 +5,26 @@ import supabase from '@/supabase-frontend'
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
 
+/**
+ * The function to export the login form to be used on the LoginPage.
+ * 
+ * @returns The HTML for the login form to be used on the loginPage.
+ */
 export default function LoginForm() {
     const [loginData, setLoginData] = useState({email: '', password: ''});
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 
+
+    /**
+     * Handles the submission of the user login form, authenticating the 
+     * user against Supabase via their email and password. 
+     * 
+     * On success, the user is navigated to he dashboard.
+     * On failure, the errors are logged and the function returns early.
+     * 
+     * @param e The event to submit the form.
+     */
     async function handleUserLogin(e: React.FormEvent){    
         e.preventDefault();
 

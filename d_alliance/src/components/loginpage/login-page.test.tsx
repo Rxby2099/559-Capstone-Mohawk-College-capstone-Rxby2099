@@ -12,8 +12,13 @@ vi.mock('@/supabase-frontend', () => ({
     }
 }));
 
+/**
+ * Tests for the login page, tests if values such as email and password are present on the forms,
+ * tests entering valid and invalid credentials in the password, and tests a user properly registering and logging in.
+ */
 describe("Login Page Testing", () => {
 
+    // Login Form specific tests
     describe("Login Form Testing", () => {
         
         test("Testing to see if the email and password fields are present", () => {
@@ -43,7 +48,7 @@ describe("Login Page Testing", () => {
 
 
 
-
+    // Registration Form specific tests
     describe("Registration Form Testing", () => {
 
         test("Testing to see if the email and password fields are present", async () => {
@@ -154,6 +159,8 @@ describe("Login Page Testing", () => {
     })
 
 
+
+    // Tests for the Login Page functions itself, both mocking a registration and login.
     describe("Mock user Registration and Login", () => {
 
         test("Mock a successful user registration", async () => {
@@ -192,7 +199,30 @@ describe("Login Page Testing", () => {
                 })
             }));
         });
+
+
+        
+        test("Mock a sucessful user sign in", async () => {
+            (supabase.auth.signInWithPassword as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                data: {
+                    user: {
+                        email: "email@email.com"
+                    },
+                    session: {}
+                },
+                error: null
+            });
+        
+            render(<LoginPage/>);
+
+            await userEvent.type(screen.getByLabelText("Email:"), "email@email.com");
+            await userEvent.type(screen.getByLabelText("Password:"), "Password_123");
+            await userEvent.click(screen.getByRole("button", { name: "Sign in" }));
+
+            expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
+                email: "email@email.com",
+                password: "Password_123"
+            });
+        });
     });
-
-
-})
+});

@@ -2,6 +2,12 @@ import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 
+
+/**
+ * The function to export the registration form to be used on the LoginPage.
+ * 
+ * @returns The HTML for the registration form to be used on the LoginPage.
+ */
 export default function RegistrationForm() {
 
     const [registrationData, setRegistrationData] = useState({ email: '', username: '', password: ''});
@@ -17,6 +23,22 @@ export default function RegistrationForm() {
     const lowercase = /[a-z]/
     const nonAlphanumeric = /[^0-9A-Za-z]/
     
+
+
+    /**
+     * Handles the submission of the user registration form. It checks whether the password
+     * entered by the user is valid or not (requiring a min of 8 and max of 64 characters,
+     * a symbol, a lowercase and uppercase letter, and a number) and will check if the confirmed
+     * password matches the original. 
+     * 
+     * On successful validation, it will send a POST request to the /signup endpoint
+     * with the user's registration data
+     * 
+     * On failure, an appropriate error message will be displayed to the user, prompting them to
+     * make adjustments to their passowrd(s).
+     * 
+     * @param e The event to submit the form.
+     */
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
         let error = false;
@@ -61,7 +83,7 @@ export default function RegistrationForm() {
         console.log("Registration response:", data);
 
         if (resp.ok) {
-           // window.location.reload();
+           //window.location.reload();
         } 
         
     }
