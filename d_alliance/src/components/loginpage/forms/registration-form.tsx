@@ -83,7 +83,7 @@ export default function RegistrationForm() {
         console.log("Registration response:", data);
 
         if (resp.ok) {
-           //window.location.reload();
+           window.location.reload();
         } 
         
     }
@@ -172,7 +172,11 @@ export default function RegistrationForm() {
                 </div>
 
                 <div id = "registerButton">
-                    <button id = "submitButton" title = "subBtn" type="submit">Register</button>
+                    <button 
+                        id = "submitButton" 
+                        title = "subBtn" 
+                        type="submit"
+                >Register</button>
                 </div>
                 
             </form>

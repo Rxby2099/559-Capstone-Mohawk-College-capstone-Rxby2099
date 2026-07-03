@@ -1,4 +1,7 @@
 @import url('https://fonts.cdnfonts.com/css/saiyan-sans');
+body{
+    margin-bottom: 0;
+}
 
 footer {
     height: 50px;
@@ -9,6 +12,11 @@ footer {
     background-color: #CA3500;
     margin: 0;
     padding: 0 20px;
+
+    /*Fixes the position of my footer for now, subject to change later if i dont like how it looks*/
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 #navBar{

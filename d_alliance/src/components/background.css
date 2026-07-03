@@ -2,8 +2,9 @@ body {
     background: linear-gradient(135deg, #ffd4a8, #ed7914);
 }
 
-body, #root {
+html, body, #root {
     min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     margin: 0;

@@ -8,11 +8,16 @@ import Footer from '../header-&-footer/footer'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 
-
+/**
+ * Provides the HTML for the LoginPage and uses Tabs, TabsList, and TabsTrigger to allow the user to switch between the login and registration
+ * forms.
+ * 
+ * @returns The HTML for the LoginPage, with both forms combined.
+ */
 export default function LoginPage(){
     
     return(
-        <>
+        <div id="loginPage">
             <Header />
             <div id = "authForm">
                 <Tabs defaultValue = "login">
@@ -32,6 +37,6 @@ export default function LoginPage(){
                 </Tabs>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
