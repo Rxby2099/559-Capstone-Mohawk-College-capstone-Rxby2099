@@ -1,0 +1,9 @@
+#charBox{
+    border: 2px solid black;
+    background-color: transparent;
+    height: 69px;
+    width: 69px;
+    margin: 10px;
+    border-radius: 10px;
+
+}
