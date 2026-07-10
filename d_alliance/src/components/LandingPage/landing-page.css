@@ -4,7 +4,7 @@
     display: flex;
     margin: 50px;
     height: 80%;
-    margin-bottom: 100px;
+    margin-bottom: 25px;
 }
 
 #newsAndDescripion{
@@ -65,6 +65,15 @@
 
 }
 
+#informationSection{
+    border: 2px solid green;
+    min-height: 100vh;
+    margin: 50px;
+    
+}
+footer{
+    height: 50px;
+}
 
 
 

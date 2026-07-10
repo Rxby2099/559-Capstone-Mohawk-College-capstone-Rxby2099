@@ -49,43 +49,14 @@ export default function LandingPage() {
 
                         <div id = "recentIcons">
                            
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                          
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                          
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                          
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                            
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
-                           
-                            <CharacterBox/>
+                            {Array.from({ 
+                                length: 18 }).map((_, i) => (<CharacterBox key={i}/>
+                            ))}
                         </div>
                     </div>
+                    
+                </div>
+                <div id = "informationSection">
                     
                 </div>
             <Footer />

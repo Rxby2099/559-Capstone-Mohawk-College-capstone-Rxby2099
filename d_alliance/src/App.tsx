@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 import LoginPage from './components/loginpage/login-page'
 import LandingPage from './components/LandingPage/landing-page'
+import TeamsPage from './components/TeamsPage/teams-page'
+import CardsPage from './components/CardsPage/cards-page'
 
 function App() {
 
@@ -28,6 +30,8 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<LandingPage />} />
+            <Route path="/teams" element={<TeamsPage />} />
+            <Route path="/cards" element={<CardsPage />} />
             
 
         </Routes>

@@ -5,8 +5,9 @@ header {
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: #CA3500;
     padding: 0 20px;
+    border-bottom: 1px solid #d5ffff ;
+    
 }
 
 #headerLogo {
@@ -33,25 +34,27 @@ header {
     padding-left: 10px;
 }
 
-nav ul {
+header nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
   
 
-nav li {
+header nav li {
     float: left;
 }
 
-nav li a {
+header nav li a {
     display: block;
-    color: #ffffff;
+    color: #CA3500;
     text-align: center;
+    font-size: 18px;
+    font-weight: bold;
     padding: 14px 16px;
 }
 
-nav li a:hover {
-    color: #6c1d00;
-    text-decoration: underline #6c1d00;
+header nav li a:hover {
+    color: #d5ffff;
+    text-decoration: underline #d5ffff;
 }

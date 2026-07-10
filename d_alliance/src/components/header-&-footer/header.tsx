@@ -1,6 +1,10 @@
 import "./header.css"
 import starImage from '../../assets/1star.png';
+import {Link} from "react-router-dom"
+ 
+
 export default function Header(){
+
     return(
         <header>
             <div id = "headerLogo">
@@ -10,9 +14,10 @@ export default function Header(){
             <div id = "navBar">
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Cards</a></li>
-                        <li><a href="#">About us</a></li>
+                        <li><Link to= "/dashboard">Home</Link></li>
+                        <li><Link to= "/cards">Cards</Link></li>
+                        <li><Link to= "/teams">Teams</Link></li>
+                        <li><Link to= "#">About us</Link></li>
                     </ul>
                 </nav>
             </div>
