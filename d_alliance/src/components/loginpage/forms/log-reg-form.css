@@ -79,7 +79,7 @@ form button:hover {
     margin-bottom: 20px;
 }
 
-#titleText{
+.titleText{
     text-align: center;
     font-family: 'Saiyan Sans', sans-serif;
     font-size: 40px;

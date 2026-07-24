@@ -14,7 +14,7 @@ export default function LandingPage() {
                 <div id = "pageContentWrapper">
 
                     <div id = "newsAndDescripion">
-                        <h2 id = "subtitles">Welcome to Dokkan Alliance!</h2>
+                        <h2 className = "titles">Welcome to Dokkan Alliance!</h2>
 
                         <div id = "dashboardMessage">
                             <p>
@@ -45,7 +45,7 @@ export default function LandingPage() {
                     <div id = "verticalSeparator"></div>
 
                     <div id = "recentUnits">
-                        <h2 id = "subtitles">Recent Units:</h2>
+                        <h2 className = "titles">Recent Units:</h2>
 
                         <div id = "recentIcons">
                            
@@ -57,7 +57,34 @@ export default function LandingPage() {
                     
                 </div>
                 <div id = "informationSection">
-                    
+                    <div id = "heading">
+                        <h2 className = "titles">What You'll Find Here</h2>
+                    </div>
+                    <div id = "infoGrid">
+                        <div id = "cardsCol">
+                            <h3 className="subtitles">View Cards</h3>
+                            <p>Browse a catalogue of all the different cards in the game, select them, and assess the card.</p>
+                            <br></br>
+                            <p>Look into the many specific details on any card such as:</p>
+                            <ul>
+                                <li>Leader skill</li>
+                                <li>Active skill</li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                            
+                        <div id = "teamsCol">
+                            <h3 className="subtitles">Build Teams</h3>
+                            <p></p>
+                        </div>
+
+                        <div id = "userCol">
+                            <h3 className="subtitles">Edit Your Profile</h3>
+                            <p></p>
+                        </div>
+                    </div>
                 </div>
             <Footer />
         </>

@@ -47,7 +47,7 @@ export default function LoginForm() {
             <form onSubmit={handleUserLogin}>
 
                 <div>
-                    <h1 id = "titleText">Login</h1>
+                    <h1 className = "titleText">Login</h1>
                 </div>
 
                 <div id = "usernameSection">

@@ -93,7 +93,7 @@ export default function RegistrationForm() {
             <form onSubmit={handleRegistration}>
 
                 <div>
-                    <h1 id = "titleText">Registration</h1>
+                    <h1 className = "titleText">Registration</h1>
                 </div>
 
                 <div id = "emailSection">
