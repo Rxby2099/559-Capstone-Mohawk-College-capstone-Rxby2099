@@ -8,6 +8,7 @@ import LoginPage from './components/loginpage/login-page'
 import LandingPage from './components/LandingPage/landing-page'
 import TeamsPage from './components/TeamsPage/teams-page'
 import CardsPage from './components/CardsPage/cards-page'
+import ProfilePage from './components/ProfilePage/profile-page'
 
 function App() {
 
@@ -22,8 +23,7 @@ function App() {
     });
   }, []);
 
-  const [count, setCount] = useState(0)
-
+  
   return (
     <BrowserRouter>
         <Routes>

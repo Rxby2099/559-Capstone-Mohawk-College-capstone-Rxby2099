@@ -59,7 +59,6 @@
 #dashboardMessage p{
     color: #CA3500;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    /* -webkit-text-stroke: 0.5px black; */
 }
 
 #recentIcons{
@@ -92,12 +91,29 @@
 #infoGrid div{
     text-align: center;
     border: 1px solid yellow;
-    height: 60vh;
+    min-height: 60vh;
     padding: 3%;
     background-color: #d5ffff ;
     border: 2px solid #CA3500;
     border-radius: 8px;
-    justify-content: center;
+    min-width: 0;
+    overflow-wrap: break-word;
+    text-align: left;
+}
+
+#infoGrid p, ul{
+    color: #CA3500;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#cardsCol ul{
+    margin: 0;
+    padding-left: 10px;
+}
+
+#cardsCol li{
+    list-style: circle;
+    list-style-position: inside;
 }
 
 
