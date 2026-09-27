@@ -71,6 +71,18 @@ form button:hover {
     font-size: 12px;
 }
 
+#emailErrorStr{
+    color: red;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+#usernameErrorStr{
+    color: red;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
 #registrationForm div {
     margin-bottom: 20px;
 }

@@ -18,6 +18,9 @@ export default function RegistrationForm() {
     const [password2, setPassword2] = useState('');
     const [missingFields, setMissingFields] = useState('');
     const [noMatch, setNoMatch] = useState('');
+    const [usernameToken, setUsernameToken] = useState('');
+    const [emailToken, setEmailToken] = useState('');
+
     const navigate = useNavigate();
     
     //Password Validation constants
@@ -44,6 +47,9 @@ export default function RegistrationForm() {
      */
     async function handleRegistration(e: React.FormEvent) {
         e.preventDefault();
+        setUsernameToken('');
+        setEmailToken('');
+        setMissingFields('');
         let error = false;
 
 
@@ -60,7 +66,7 @@ export default function RegistrationForm() {
         }
 
         else{
-            setMissingFields("");
+            setMissingFields('');
         }
 
         if (password2 != registrationData.password){
@@ -69,7 +75,7 @@ export default function RegistrationForm() {
         }
 
         else{
-            setNoMatch("");
+            setNoMatch('');
         }
 
         if(error){
@@ -94,6 +100,14 @@ export default function RegistrationForm() {
 
             navigate("/dashboard")
         } 
+
+        else if (data.message === 'Username taken'){
+            setUsernameToken('Username is already taken!');
+        }
+
+        else if (data.message === 'Email already in use'){
+            setEmailToken('Email is already taken!')
+        }
         
     }
     
@@ -119,6 +133,7 @@ export default function RegistrationForm() {
                         value = {registrationData.email}
                         onChange={(e) => setRegistrationData({...registrationData, email: e.target.value})}
                     />
+                    <p id = "emailErrorStr" title = "emailError">{emailToken}</p>
                 </div>
 
                 <div id = "usernameSection">
@@ -134,6 +149,7 @@ export default function RegistrationForm() {
                         spellCheck = "false" 
                         value = {registrationData.username}
                         onChange={(e) => setRegistrationData({...registrationData, username: e.target.value})}/>
+                    <p id = "usernameErrorStr" title = "usernameError">{usernameToken}</p>
                 </div>
 
                 <div id = "passwordSection">
