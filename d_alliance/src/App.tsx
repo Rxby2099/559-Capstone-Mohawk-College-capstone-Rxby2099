@@ -23,7 +23,6 @@ function App() {
     });
   }, []);
 
-  
   return (
     <BrowserRouter>
         <Routes>
@@ -32,8 +31,7 @@ function App() {
             <Route path="/dashboard" element={<LandingPage />} />
             <Route path="/teams" element={<TeamsPage />} />
             <Route path="/cards" element={<CardsPage />} />
-            
-
+            <Route path="/profile" element={<ProfilePage />} />
         </Routes>
     </BrowserRouter>
   )

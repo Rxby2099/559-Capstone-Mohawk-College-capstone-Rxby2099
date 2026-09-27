@@ -24,7 +24,6 @@ app.post('/signup', async(req, resp) => {
 
     console.log("Auth table user created: ", data.user?.id);
 
-//    console.log("Username: " + username + "\n", "Email: " + email + "\n", "Password: " + password);
 
     const {error: insertError} = await supabase
         .from('users')
@@ -40,7 +39,7 @@ app.post('/signup', async(req, resp) => {
     }
 
     console.log("Registration attempt: ", {username, email, password});
-    resp.json({message: "Successful registration", user: {id: data.user?.id, username, email}});
+    resp.json({message: "Successful registration", session: data.session});
 
 });
 

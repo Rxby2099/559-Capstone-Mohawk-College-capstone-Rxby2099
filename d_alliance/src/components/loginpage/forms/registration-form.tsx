@@ -1,6 +1,8 @@
 import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
+import supabase from '../../../supabase-frontend'
+import { useNavigate } from "react-router-dom";
 
 
 /**
@@ -16,6 +18,7 @@ export default function RegistrationForm() {
     const [password2, setPassword2] = useState('');
     const [missingFields, setMissingFields] = useState('');
     const [noMatch, setNoMatch] = useState('');
+    const navigate = useNavigate();
     
     //Password Validation constants
     const digit = /[0-9]/
@@ -82,8 +85,14 @@ export default function RegistrationForm() {
         const data = await resp.json();
         console.log("Registration response:", data);
 
-        if (resp.ok) {
-           window.location.reload();
+        // Checks if the response was okay and awaits
+        if (resp.ok && data.session) {
+            await supabase.auth.setSession({
+                access_token: data.session.access_token,
+                refresh_token: data.session.refresh_token
+            });
+
+            navigate("/dashboard")
         } 
         
     }

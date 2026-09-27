@@ -5,5 +5,11 @@
     width: 69px;
     margin: 10px;
     border-radius: 10px;
+    overflow: hidden;
+}
 
+#charbox img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
 }

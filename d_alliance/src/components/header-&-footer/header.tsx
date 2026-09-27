@@ -2,7 +2,6 @@ import "./header.css"
 import starImage from '../../assets/1star.png';
 import {Link} from "react-router-dom"
  
-
 export default function Header(){
 
     return(
@@ -19,9 +18,15 @@ export default function Header(){
                         <li><Link to= "/teams">Teams</Link></li>
                         <li><Link to= "#">About us</Link></li>
                     </ul>
+                    
                 </nav>
             </div>
-                
+            <div id = "viewProfile">
+                <Link to = "/profile">
+                    <div id = "profilePic"></div>
+                    <div id = "profileLink">View Profile</div>
+                </Link>
+            </div>     
             
         </header>
     )

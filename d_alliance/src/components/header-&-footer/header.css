@@ -30,21 +30,24 @@ header {
     letter-spacing: 2.7px;
 }
 
-#navBar{
-    padding-left: 10px;
+#navbar {
+    padding: 10px;
+    flex: 1;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 header nav ul {
+    display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
   
-
-header nav li {
-    float: left;
-}
-
 header nav li a {
     display: block;
     color: #CA3500;
@@ -57,4 +60,33 @@ header nav li a {
 header nav li a:hover {
     color: #d5ffff;
     text-decoration: underline #d5ffff;
+}
+
+#viewProfile {
+    margin-left: auto;
+}
+
+#viewProfile a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+#profilePic{
+    border: 2px solid #CA3500;
+    background-color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#profileLink {
+    font-size: 11px;
+    color: #CA3500;
+}
+
+#profileLink:hover{
+    color: #d5ffff;
+    text-decoration: underline #d5ffff;  
 }

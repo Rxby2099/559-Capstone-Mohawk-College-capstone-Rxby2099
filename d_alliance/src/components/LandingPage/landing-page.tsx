@@ -6,6 +6,8 @@ import Footer from '../header-&-footer/footer'
 
 import CharacterBox from '../character-box/character-box'
 
+import GokuImg from '../../assets/HiImGoku.jpg'
+
 export default function LandingPage() {
 
     return(
@@ -50,7 +52,7 @@ export default function LandingPage() {
                         <div id = "recentIcons">
                            
                             {Array.from({ 
-                                length: 18 }).map((_, i) => (<CharacterBox key={i}/>
+                                length: 18 }).map((_, i) => (<CharacterBox key={i} image= {GokuImg}  />
                             ))}
                         </div>
                     </div>
@@ -81,6 +83,19 @@ export default function LandingPage() {
 
                         </div>
                             
+                        
+
+                        <div id = "userCol">
+                            <h3 className="subtitles">Edit Your Profile</h3>
+
+                            <p>Visit your own profile page where you;ll be able to view your personal account data like your email and username, as well as changing your profile picture to match your own vibe</p>
+                            
+                            <br></br>
+
+                            <p>Once your profile is setup to your liking, its time to make some teams and get them saved to your profile where you can go to view and edit them at any time.</p>
+
+                        </div>
+                        
                         <div id = "teamsCol">
 
                             <h3 className="subtitles">Build Teams</h3>
@@ -89,14 +104,11 @@ export default function LandingPage() {
                             <br></br>
 
                             <p>Whether it's a team with all around utility to take into the strongest events like Red Zones, or a team with a specific strategy in mind for fights with certain gimmicks. </p>
+
+                            <br></br>
+
+                            <p>After saving some teams, its time to open DBZ Dokkan Battle and put these teams to use, whether its a team you plan to make after aquirring certain characters you dont yet have, or a team you can test out and take to battle right away.</p>
                         
-                        </div>
-
-                        <div id = "userCol">
-                            <h3 className="subtitles">Edit Your Profile</h3>
-
-                            <p></p>
-                            
                         </div>
                     </div>
                 </div>
