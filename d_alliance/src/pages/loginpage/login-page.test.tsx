@@ -1,7 +1,7 @@
 import LoginPage from "./login-page";
 import {render, screen} from '@testing-library/react';
 import {userEvent} from '@testing-library/user-event';
-import supabase from "@/supabase-frontend";
+import supabase from "@/lib/supabase-frontend";
 
 vi.mock('@/supabase-frontend', () => ({
     default: {

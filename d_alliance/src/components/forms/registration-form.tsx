@@ -1,7 +1,7 @@
 import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import supabase from '@/supabase-frontend'
+import supabase from '@/lib/supabase-frontend'
 import { useNavigate } from "react-router-dom";
 
 

@@ -1,3 +1,15 @@
 .teamCard{
-    background-color: coral;
+    background-color: #CA3500;
+    display: flex;
+    
+}
+
+.teamCard h3 {
+    margin-right: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+}
+
+.teamCard button {
+    margin-right: 5px;
 }

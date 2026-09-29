@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import { useEffect } from 'react'
-import supabase from './supabase-frontend'
+import supabase from './lib/supabase-frontend'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { AuthProvider } from './context/AuthContext'
 
 import LoginPage from './pages/loginpage/login-page'
 import LandingPage from './pages/LandingPage/landing-page'
@@ -25,7 +26,8 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
@@ -34,7 +36,9 @@ function App() {
             <Route path="/cards" element={<CardsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
+    
   )
 }
 

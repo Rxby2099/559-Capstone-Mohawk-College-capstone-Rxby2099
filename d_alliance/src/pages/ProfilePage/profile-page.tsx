@@ -27,8 +27,12 @@ export default function ProfilePage() {
 
                             <h2>Email: </h2>
                             <p>@emailFillerText</p>
+
+                            <h2>Date Joined: </h2>
+                            <p>DD/MM/YYY</p>
                         </div>
                         <div className='teamsSection'>
+                            <h3 id = "teamTitle">Teams</h3>
                             <TeamCard/>
                         </div>
                     </div>
