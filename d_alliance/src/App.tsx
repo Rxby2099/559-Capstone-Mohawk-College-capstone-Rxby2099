@@ -4,11 +4,12 @@ import { useEffect } from 'react'
 import supabase from './supabase-frontend'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
-import LoginPage from './components/loginpage/login-page'
-import LandingPage from './components/LandingPage/landing-page'
-import TeamsPage from './components/TeamsPage/teams-page'
-import CardsPage from './components/CardsPage/cards-page'
-import ProfilePage from './components/ProfilePage/profile-page'
+import LoginPage from './pages/loginpage/login-page'
+import LandingPage from './pages/LandingPage/landing-page'
+import TeamsPage from './pages/TeamsPage/teams-page'
+import CardsPage from './pages/CardsPage/cards-page'
+import ProfilePage from './pages/ProfilePage/profile-page'
+
 
 function App() {
 

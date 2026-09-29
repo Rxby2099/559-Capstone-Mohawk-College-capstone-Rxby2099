@@ -1,12 +1,12 @@
-import "../background.css"
+import "../../App.css"
 import "./login-page.css"
 
-import LoginForm from "./forms/login-form"
-import RegistrationForm from "./forms/registration-form"
-import Header from "../header-&-footer/header"
-import Footer from '../header-&-footer/footer'
+import LoginForm from "@/components/forms/login-form"
+import RegistrationForm from "@/components/forms/registration-form"
+// import Header from "@/components/header-&-footer/header"
+import Footer from "@/components/header-&-footer/footer"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
 
 /**
  * Provides the HTML for the LoginPage and uses Tabs, TabsList, and TabsTrigger to allow the user to switch between the login and registration
@@ -18,7 +18,6 @@ export default function LoginPage(){
     
     return(
         <div id="loginPage">
-            <Header />
             <div id = "authForm">
                 <Tabs defaultValue = "login">
                     <TabsList>

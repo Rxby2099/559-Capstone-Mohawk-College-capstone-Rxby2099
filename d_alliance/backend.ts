@@ -8,10 +8,24 @@ const app = express();
 app.use(cors({ origin: 'http://localhost:5173' })) 
 app.use(express.json()) 
 
+/**
+ * Handles the signup functionality
+ */
 app.post('/signup', async(req, resp) => {
    const {username, email, password} = req.body; 
 
+    // Checking for an existing email in the database and send the correct error response if so
+    const { data : existingEmail } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email)
+        .maybeSingle();
 
+    if(existingEmail) {
+        return resp.status(400).json({message: 'Email already in use'})
+    }
+
+    // Checking for an existing username in the database and send the correct error response if so
     const { data: existingUser } = await supabase
         .from('users')
         .select('username')
@@ -22,7 +36,7 @@ app.post('/signup', async(req, resp) => {
         return resp.status(400).json({message: 'Username taken'});
     }
 
-
+    // Attempts to signup, awaiting the email and password for the signup 
     const {data, error} = await supabase.auth.signUp({
         email: email,
         password: password
@@ -30,10 +44,6 @@ app.post('/signup', async(req, resp) => {
 
 
     if(error){
-        if (error.message.includes('already registered') || error.code === 'user_already_exists') {
-            return resp.status(400).json({message: 'Email already in use'});
-        }
-
         console.error('Erorr registering user:', error);
         return resp.status(400).json({message: 'Registration failed', error: error.message });
     }
@@ -49,6 +59,8 @@ app.post('/signup', async(req, resp) => {
             email: email
         });
 
+
+    // Checks for an existing user in the table when inserting, and checks if there is an overall error when inserting
     if(insertError) {
         if(insertError.code === '23505'){
             return resp.status(400).json({message: 'Username taken'});
@@ -59,11 +71,13 @@ app.post('/signup', async(req, resp) => {
     }
 
 
+    // Updates the system with the successful registration message
     console.log("Registration attempt: ", {username, email, password});
     resp.json({message: "Successful registration", session: data.session});
 
 });
 
+// Announces the server is running on the given port
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

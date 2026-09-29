@@ -1,8 +1,8 @@
-import '../background.css'
 import './cards-page.css'
 
-import Header from '../header-&-footer/header'
-import Footer from '../header-&-footer/footer'
+import Header from '@/components/header-&-footer/header'
+import Footer from '@/components/header-&-footer/footer'
+
 
 export default function CardsPage() {
     return(

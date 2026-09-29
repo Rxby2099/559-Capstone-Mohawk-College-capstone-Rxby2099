@@ -1,19 +1,26 @@
-import '../background.css'
 import './landing-page.css'
 
-import Header from '../header-&-footer/header'
-import Footer from '../header-&-footer/footer'
+import Header from '@/components/header-&-footer/header'
+import Footer from '@/components/header-&-footer/footer'
 
-import CharacterBox from '../character-box/character-box'
+import CharacterBox from '@/components/character-box/character-box'
 
-import GokuImg from '../../assets/HiImGoku.jpg'
+import GokuImg from '@/assets/HiImGoku.jpg'
 
+/**
+ * The dasaboard of Dokkan alliance where the user will be greeted with:
+ * information on the website and what is to be expected of it
+ * TO BE ADDED:
+ * display of recently added characters, currently showing as an array of character 
+ * slots with a goku placeholder.
+ * @returns The landing page/dashboard of Dokkan Alliance
+ */
 export default function LandingPage() {
 
     return(
         <>
             <Header />
-                <div id = "pageContentWrapper">
+                <div id = "landingPageWrapper">
 
                     <div id = "newsAndDescripion">
                         <h2 className = "titles">Welcome to Dokkan Alliance!</h2>

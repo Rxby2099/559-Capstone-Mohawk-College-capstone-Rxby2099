@@ -1,7 +1,7 @@
 import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import supabase from '../../../supabase-frontend'
+import supabase from '@/supabase-frontend'
 import { useNavigate } from "react-router-dom";
 
 
@@ -43,16 +43,20 @@ export default function RegistrationForm() {
      * On failure, an appropriate error message will be displayed to the user, prompting them to
      * make adjustments to their passowrd(s).
      * 
+     * Will make a call to the database to see if the username and email exist and if the user was 
+     * granted a session, and if they pass will be sent to the dashboard, if not they'll be prompted that
+     * the username or email they've tried has failed
      * @param e The event to submit the form.
      */
     async function handleRegistration(e: React.FormEvent) {
+        // set states to default
         e.preventDefault();
         setUsernameToken('');
         setEmailToken('');
         setMissingFields('');
         let error = false;
 
-
+        // Password checking logic
         if(!digit.test(registrationData.password) ||
             !uppercase.test(registrationData.password) || 
             !lowercase.test(registrationData.password) ||
@@ -64,11 +68,13 @@ export default function RegistrationForm() {
                 error = true;
                 
         }
+        
 
         else{
             setMissingFields('');
         }
 
+        // Password 2 comparison logic
         if (password2 != registrationData.password){
             setNoMatch("Passwords must match!");
             error = true;
@@ -78,10 +84,12 @@ export default function RegistrationForm() {
             setNoMatch('');
         }
 
+        // return if there is an error
         if(error){
             return;
         }
 
+        // send the registration data to the database and run the signup function
         const resp = await fetch("http://localhost:8000/signup", {
             method: "POST",
             headers: { 'Content-Type': 'application/json'},
@@ -97,14 +105,16 @@ export default function RegistrationForm() {
                 access_token: data.session.access_token,
                 refresh_token: data.session.refresh_token
             });
-
+        
             navigate("/dashboard")
         } 
-
+        
+        // Check if username is in use
         else if (data.message === 'Username taken'){
             setUsernameToken('Username is already taken!');
         }
 
+        // Check if username is in use
         else if (data.message === 'Email already in use'){
             setEmailToken('Email is already taken!')
         }

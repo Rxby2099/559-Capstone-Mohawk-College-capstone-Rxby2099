@@ -1,8 +1,7 @@
-import '../background.css'
 import './teams-page.css'
 
-import Header from '../header-&-footer/header'
-import Footer from '../header-&-footer/footer'
+import Header from '@/components/header-&-footer/header'
+import Footer from '@/components/header-&-footer/footer'
 
 export default function TeamsPage() {
     return(

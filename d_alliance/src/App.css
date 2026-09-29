@@ -1,0 +1,15 @@
+body {
+    background: linear-gradient(135deg, #ffd4a8, #ed7914);
+}
+
+html, body, #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+main, .pageContent {
+    flex: 1;
+}
