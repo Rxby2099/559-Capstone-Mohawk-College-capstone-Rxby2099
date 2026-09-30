@@ -105,8 +105,6 @@ export default function RegistrationForm() {
                 access_token: data.session.access_token,
                 refresh_token: data.session.refresh_token
             });
-        
-            navigate("/dashboard")
         } 
         
         // Check if username is in use

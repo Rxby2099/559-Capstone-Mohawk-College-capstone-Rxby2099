@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import gokuPic from '../../assets/HiImGoku.jpg'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
+import EditProfile from '@/components/forms/edit-profile-form'
 
 export default function ProfilePage() {
 
@@ -21,32 +22,32 @@ export default function ProfilePage() {
     const navigate = useNavigate();
     const { user} = useAuth();
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const [showEditProfile, setShowEditProfile] = useState(false);
 
-    useEffect(() => {
+    /**
+     * Queries the database to retrieve the users username, email and created_at time
+     * 
+     * @returns returns an object of the users username, email, and time created all unpacked from data
+     */
+    async function fetchProfile() {
+
         if (!user) return;
 
-        const currentUser = user;
+        const { data, error} = await supabase
+            .from('users')
+            .select('username, email, created_at')
+            .eq('id', user.id)
+            .single();
 
-        /**
-         * Queries the database to retrieve the users username, email and created_at time
-         * 
-         * @returns returns an object of the users username, email, and time created all unpacked from data
-         */
-        async function fetchProfile() {
-            const { data, error} = await supabase
-                .from('users')
-                .select('username, email, created_at')
-                .eq('id', currentUser.id)
-                .single();
-
-            if (error) {
-                console.error('Error fetching profile:', error)
-                return;
-            }
-
-            setProfile(data);
+        if (error) {
+            console.error('Error fetching profile:', error)
+            return;
         }
 
+        setProfile(data);
+    }
+
+    useEffect(() => {
         fetchProfile();
     }, [user])
 
@@ -84,6 +85,13 @@ export default function ProfilePage() {
 
                             <h2>Date Joined: </h2>
                             <p>{profile ? new Date(profile.created_at).toLocaleDateString() : 'Loading...'}</p>
+                            <button id = 'editProfile' type='button' onClick={ () => setShowEditProfile(true)}>Edit Profile</button>
+
+                            {showEditProfile && (
+                                <EditProfile 
+                                onClose={() => setShowEditProfile(false)}
+                                onUpdate={fetchProfile} />
+                            )}
                         </div>
 
                         <div className = "verticalSeparator"></div>
