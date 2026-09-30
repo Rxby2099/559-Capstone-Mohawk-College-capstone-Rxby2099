@@ -39,7 +39,7 @@ export default function LoginForm() {
         }
 
         navigate("/dashboard");
-        console.log('User Signed in successfully: ', data);
+        // console.log('User Signed in successfully: ', data);
     }
 
     return (

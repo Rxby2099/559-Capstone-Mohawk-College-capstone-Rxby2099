@@ -7,11 +7,43 @@ import supabase from '@/lib/supabase-frontend'
 import { useNavigate } from 'react-router-dom'
 
 import gokuPic from '../../assets/HiImGoku.jpg'
-import { use } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '@/context/AuthContext'
 
 export default function ProfilePage() {
 
+    type UserProfile = {
+        username: string;
+        email: string;
+        created_at: string;
+    }
+
     const navigate = useNavigate();
+    const { user} = useAuth();
+    const [profile, setProfile] = useState<UserProfile | null>(null);
+
+    useEffect(() => {
+        if (!user) return;
+
+        const currentUser = user;
+
+        async function fetchProfile() {
+            const { data, error} = await supabase
+                .from('users')
+                .select('username, email, created_at')
+                .eq('id', currentUser.id)
+                .single();
+
+            if (error) {
+                console.error('Error fetching profile:', error)
+                return;
+            }
+
+            setProfile(data);
+        }
+
+        fetchProfile();
+    }, [user])
 
     /**
      * handles the logging out functionality, calling supase's built in signout
@@ -20,6 +52,8 @@ export default function ProfilePage() {
         await supabase.auth.signOut();
         navigate('/login');
     }
+
+
 
     return(
         <>
@@ -37,13 +71,13 @@ export default function ProfilePage() {
                         </div>
                         <div className='informationSection'>
                             <h2>Username: </h2>
-                            <p>@usernameFillerText</p>
+                            <p>{profile?.username ?? 'Loading...'}</p>
 
                             <h2>Email: </h2>
-                            <p>@emailFillerText</p>
+                            <p>{profile?.email ?? 'Loading...'}</p>
 
                             <h2>Date Joined: </h2>
-                            <p>DD/MM/YYY</p>
+                            <p>{profile ? new Date(profile.created_at).toLocaleDateString() : 'Loading...'}</p>
                         </div>
 
                         <div className = "verticalSeparator"></div>

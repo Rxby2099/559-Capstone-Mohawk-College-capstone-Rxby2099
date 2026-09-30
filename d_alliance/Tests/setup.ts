@@ -2,9 +2,13 @@ import {cleanup} from '@testing-library/react'
 import '@testing-library/jest-dom';
 import { beforeAll, beforeEach, afterEach, vi } from 'vitest';
 
-vi.mock('react-router-dom', () => ({
-    useNavigate: () => vi.fn(),
-}));
+vi.mock('react-router-dom', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('react-router-dom')>();
+    return {
+        ...actual,
+        useNavigate: () => vi.fn(),
+    };
+});
 
 const mockFetch = vi.fn();
 globalThis.fetch = mockFetch;

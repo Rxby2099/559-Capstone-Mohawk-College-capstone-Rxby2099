@@ -2,8 +2,9 @@ import LoginPage from "./login-page";
 import {render, screen} from '@testing-library/react';
 import {userEvent} from '@testing-library/user-event';
 import supabase from "@/lib/supabase-frontend";
+import { MemoryRouter } from "react-router-dom";
 
-vi.mock('@/supabase-frontend', () => ({
+vi.mock('@/lib/supabase-frontend', () => ({
     default: {
         auth: {
             signInWithPassword: vi.fn(),
@@ -22,7 +23,7 @@ describe("Login Page Testing", () => {
     describe("Login Form Testing", () => {
         
         test("Testing to see if the email and password fields are present", () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
             expect(screen.getByLabelText("Password:")).toBeInTheDocument();
             expect(screen.getByLabelText("Email:")).toBeInTheDocument();
         })
@@ -30,7 +31,7 @@ describe("Login Page Testing", () => {
 
 
         test("Testing switching tabs to get to the registration form and back", async ()=> {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -52,7 +53,7 @@ describe("Login Page Testing", () => {
     describe("Registration Form Testing", () => {
 
         test("Testing to see if the email and password fields are present", async () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -69,7 +70,7 @@ describe("Login Page Testing", () => {
         
 
         test("Testing a password that is meant to fail", async () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -91,7 +92,7 @@ describe("Login Page Testing", () => {
 
 
         test("Testing a password that is valid", async () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -112,7 +113,7 @@ describe("Login Page Testing", () => {
 
 
         test("Testing a confirmed password that is meant to fail", async () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -136,7 +137,7 @@ describe("Login Page Testing", () => {
 
 
         test("Testing a confirmed password that is valid", async () => {
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -176,7 +177,7 @@ describe("Login Page Testing", () => {
     
             });
 
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
     
             await userEvent.click(
                 screen.getByRole("tab", {
@@ -213,7 +214,7 @@ describe("Login Page Testing", () => {
                 error: null
             });
         
-            render(<LoginPage/>);
+            render(<MemoryRouter><LoginPage/></MemoryRouter>);
 
             await userEvent.type(screen.getByLabelText("Email:"), "email@email.com");
             await userEvent.type(screen.getByLabelText("Password:"), "Password_123");
