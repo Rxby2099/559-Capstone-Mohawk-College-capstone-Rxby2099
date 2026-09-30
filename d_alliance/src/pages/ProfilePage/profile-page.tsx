@@ -27,6 +27,11 @@ export default function ProfilePage() {
 
         const currentUser = user;
 
+        /**
+         * Queries the database to retrieve the users username, email and created_at time
+         * 
+         * @returns returns an object of the users username, email, and time created all unpacked from data
+         */
         async function fetchProfile() {
             const { data, error} = await supabase
                 .from('users')
@@ -44,6 +49,7 @@ export default function ProfilePage() {
 
         fetchProfile();
     }, [user])
+
 
     /**
      * handles the logging out functionality, calling supase's built in signout
