@@ -45,9 +45,13 @@ export default function ProfilePage() {
                             <h2>Date Joined: </h2>
                             <p>DD/MM/YYY</p>
                         </div>
+
+                        <div className = "verticalSeparator"></div>
+
                         <div className='teamsSection'>
                             <h3 id = "teamTitle">Teams</h3>
-                            <TeamCard/>
+                            <TeamCard name = "DAIMA"/>
+                            <TeamCard name = "Goku Fam"/>
                         </div>
                     </div>
                     

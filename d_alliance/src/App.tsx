@@ -18,22 +18,10 @@ import ProfilePage from './pages/ProfilePage/profile-page'
 
 function App() {
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if(event === 'SIGNED_IN'){
-        console.log('User logged in: ', session);
-      }
-      else if(event === 'SIGNED_OUT'){
-        console.log('User logged out');
-      }
-    });
-  }, []);
-
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-
 
             <Route path="/" element={
               <SessionlessRouteLock><Navigate to="/login" /></SessionlessRouteLock>

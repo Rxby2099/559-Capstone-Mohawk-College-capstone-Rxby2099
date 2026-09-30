@@ -1,8 +1,8 @@
 .teamCard{
     background-color: #CA3500;
     display: flex;
-    padding: 3px;
-    
+    padding: 3px; 
+    border-radius: 8px 8px 0px 0px;
 }
 
 .teamCard h3 {
@@ -19,4 +19,16 @@
 .teamCard button:hover {
     margin-right: 5px;
     color: #ffffff;
+}
+
+.teamArray {
+    display: flex;
+    justify-content: center;
+    background-color: #f07800;
+    border-radius: 0px 0px 8px 8px ;
+}
+
+.teamCardWrapper{
+    margin-bottom: 5px;
+    
 }

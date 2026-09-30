@@ -2,9 +2,10 @@
 
 
 
-#profilePageWrapper {
+#profileWrapper {
     display: flex;
     flex-direction: column;
+    padding: 3%;
 }
 
 .title {
@@ -19,18 +20,14 @@
 .profileSection {
     display: flex;
     flex-direction: row;
-    border-top: 2px solid red;
-    border-bottom: 2px solid red;
-    border-left: 2px solid red;
-
 }
 
 .informationSection {
-    border-top: 2px solid red;
-    border-bottom: 2px solid red;
     flex: 1;
     padding-left: 2%;
     padding-top: 3%;
+    border-top: 2px solid red;
+    border-bottom: 2px solid red;
 }
 
 .informationSection h2 {
@@ -49,8 +46,11 @@
 }
 
 .teamsSection {
-    border: 2px solid red;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
+    border-right: 2px solid blue;
     flex: 2;
+    padding: 5px;
 }
 
 #teamTitle {
@@ -66,6 +66,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-top: 2px solid red;
+    border-bottom: 2px solid red;
+    border-left: 2px solid red;
 }
 
 .profilePicCircle {
@@ -95,6 +98,7 @@
 }
 
 #logoutButton{
+    align-self: flex-end;
     margin: 10px;
     width: 90px;
     padding: 9px;
@@ -109,8 +113,16 @@
 #logoutButton:hover{
     color: #CA3500;
     background-color: #ffffff;
-    border: 1px solid #CA3500
+    border: 1px solid #CA3500;
 }
+
+.verticalSeparator{
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, #CA3500 20%, #CA3500 80%, transparent);
+    height: auto;
+    margin: 5px 0px 5px 0px;
+}
+
 
 
 
