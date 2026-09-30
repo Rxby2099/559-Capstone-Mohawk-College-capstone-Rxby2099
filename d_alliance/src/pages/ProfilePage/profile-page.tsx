@@ -3,10 +3,24 @@ import './profile-page.css'
 import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
 import TeamCard from '../../components/TeamCard/team-card'
+import supabase from '@/lib/supabase-frontend'
+import { useNavigate } from 'react-router-dom'
 
 import gokuPic from '../../assets/HiImGoku.jpg'
+import { use } from 'react'
 
 export default function ProfilePage() {
+
+    const navigate = useNavigate();
+
+    /**
+     * handles the logging out functionality, calling supase's built in signout
+     */
+    async function handleLogout() {
+        await supabase.auth.signOut();
+        navigate('/login');
+    }
+
     return(
         <>
             <Header/>
@@ -38,7 +52,7 @@ export default function ProfilePage() {
                     </div>
                     
 
-                    <button id = 'logoutButton' type='button'>Logout!</button>
+                    <button id = 'logoutButton' type='button' onClick={handleLogout}>Logout!</button>
                 </div>
             </main>
             <Footer/>

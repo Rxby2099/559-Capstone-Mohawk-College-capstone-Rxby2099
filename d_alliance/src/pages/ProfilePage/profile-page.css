@@ -93,3 +93,24 @@
 .changePicLink:hover {
     color: #f07800;
 }
+
+#logoutButton{
+    margin: 10px;
+    width: 90px;
+    padding: 9px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
+
+#logoutButton:hover{
+    color: #CA3500;
+    background-color: #ffffff;
+    border: 1px solid #CA3500
+}
+
+
+

@@ -1,6 +1,7 @@
 .teamCard{
     background-color: #CA3500;
     display: flex;
+    padding: 3px;
     
 }
 
@@ -12,4 +13,10 @@
 
 .teamCard button {
     margin-right: 5px;
+    color: #000000;
+}
+
+.teamCard button:hover {
+    margin-right: 5px;
+    color: #ffffff;
 }
