@@ -2,15 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import supabase from './supabase-backend';
 import dokkanDb from './lib/dokkan-db';
+import cardRouter from './routes/cards';
 
-const test = dokkanDb.prepare('SELECT COUNT(*) AS total FROM cards').get()
-console.log('Cards in database:', test);
 
 const PORT = 8000;
 const app = express();
 
 app.use(cors({ origin: 'http://localhost:5173' })) 
 app.use(express.json()) 
+app.use('/api/cards', cardRouter);
 
 /**
  * Handles the signup functionality
