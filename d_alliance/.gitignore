@@ -25,3 +25,6 @@ dist-ssr
 
 # environment vars
 .env
+
+# game db
+backend/data/*.db

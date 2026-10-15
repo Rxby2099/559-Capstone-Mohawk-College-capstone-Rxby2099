@@ -49,8 +49,9 @@ export default function RegistrationForm() {
      * @param e The event to submit the form.
      */
     async function handleRegistration(e: React.FormEvent) {
-        // set states to default
+        // prevent page refresh
         e.preventDefault();
+        // set states to default
         setUsernameToken('');
         setEmailToken('');
         setMissingFields('');

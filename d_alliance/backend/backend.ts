@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import supabase from './supabase-backend';
+import dokkanDb from './lib/dokkan-db';
+
+const test = dokkanDb.prepare('SELECT COUNT(*) AS total FROM cards').get()
+console.log('Cards in database:', test);
 
 const PORT = 8000;
 const app = express();
@@ -72,7 +76,7 @@ app.post('/signup', async(req, resp) => {
 
 
     // Updates the system with the successful registration message
-    console.log("Registration attempt: ", {username, email, password});
+    console.log("Registration attempt: ", {username, email});
     resp.json({message: "Successful registration", session: data.session});
 
 });
