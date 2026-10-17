@@ -1,0 +1,18 @@
+.cardList {
+    --gap: 2rem;
+    --rule: linear-gradient(to bottom, transparent, #CA3500 20%, #CA3500 80%, transparent);
+
+    background-color: #d5ffff;
+    border: 2px solid #CA3500;
+    column-count: 3;
+    column-gap: var(--gap);
+
+    background-image: var(--rule), var(--rule);
+    background-repeat: no-repeat;
+    background-size: 1px 100%;
+    background-origin: content-box;
+    background-position:
+        calc((100% - var(--gap)) / 3 + var(--gap) / 2) 0,
+        calc((100% - var(--gap)) / 3 * 2 + var(--gap) * 1.5) 0;
+}
+

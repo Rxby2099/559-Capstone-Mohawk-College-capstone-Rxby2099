@@ -45,24 +45,37 @@ cardRouter.get('/', (req, resp) => {
     // Round up so that the last page still shows cards even if there isnt 100
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
-    // Select statement to grab all necessary information from each card, offsetting 
-    // by 100 on each next click
+    // Select statement to grab the id, name, and title from each card, specifigically 
+    // ones with valid leader skills (has a leader skill) offsetting by 100 on each next click
     const data = dokkanDb.prepare(`
         SELECT 
             cards.id,
             cards.name,
-            ls.name AS title,
-            cards.rarity,
-            cards.element,
-            cards.cost,
-            cards.hp_max,
-            cards.atk_max,
-            cards.def_max
+            ls.name AS title
         FROM cards
         JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id
         WHERE ${PLAYABLE_FILTER}
         ORDER BY cards.open_at DESC, cards.id DESC
         LIMIT ? OFFSET ?`).all(PAGE_SIZE, (page - 1) * PAGE_SIZE);
+    
+
+        // Initial query that will probably 
+        // const data = dokkanDb.prepare(`
+        // SELECT 
+        //     cards.id,
+        //     cards.name,
+        //     ls.name AS title,
+        //     cards.rarity,
+        //     cards.element,
+        //     cards.cost,
+        //     cards.hp_max,
+        //     cards.atk_max,
+        //     cards.def_max
+        // FROM cards
+        // JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id
+        // WHERE ${PLAYABLE_FILTER}
+        // ORDER BY cards.open_at DESC, cards.id DESC
+        // LIMIT ? OFFSET ?`).all(PAGE_SIZE, (page - 1) * PAGE_SIZE);
 
     resp.json({ data, page, pageSize: PAGE_SIZE, total, totalPages })
 });
