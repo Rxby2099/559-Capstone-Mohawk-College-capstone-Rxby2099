@@ -33,7 +33,7 @@ app.post('/signup', async(req, resp) => {
     const { data: existingUser } = await supabase
         .from('users')
         .select('username')
-        .eq('username', username)
+        .ilike('username', username)
         .maybeSingle();
 
     if(existingUser){
@@ -49,6 +49,10 @@ app.post('/signup', async(req, resp) => {
 
     if(error){
         console.error('Erorr registering user:', error);
+
+        if(error.message === 'User already registered' || error.code === 'user_already_exists'){
+            return resp.status(400).json({message: 'Email already in use'});
+        }
         return resp.status(400).json({message: 'Registration failed', error: error.message });
     }
 
@@ -66,7 +70,18 @@ app.post('/signup', async(req, resp) => {
 
     // Checks for an existing user in the table when inserting, and checks if there is an overall error when inserting
     if(insertError) {
+        if(data.user?.id){
+            const {error: deleteError} = await supabase.auth.admin.deleteUser(data.user.id);
+            if(deleteError){
+                console.error('Failed to rollback auth user:', deleteError);
+            }
+        }
+
+
         if(insertError.code === '23505'){
+            if(insertError.message.includes('email')){
+                return resp.status(400).json({message: 'Email already in use'});
+            }
             return resp.status(400).json({message: 'Username taken'});
         }
 

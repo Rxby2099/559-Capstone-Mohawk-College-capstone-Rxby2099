@@ -12,7 +12,7 @@ footer {
 }
 
 footer p{
-    font-family: 'Saiyan Sans', sans-serif;
+    font-family: fantasy;
     font-size: clamp(26px, 4vw, 45px);
     white-space: nowrap;
     color: #CA3500;

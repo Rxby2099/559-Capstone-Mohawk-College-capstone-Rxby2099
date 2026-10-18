@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthProvider } from './context/AuthContext'
 import SessionRouteLock from './components/RouteLocks/SessionRouteLock'
 import SessionlessRouteLock from './components/RouteLocks/SessionlessLock'
+import "@fontsource/liter";
+import "@fontsource/liter/400.css";
 
 // Imported pages
 import LoginPage from './pages/loginpage/login-page'
@@ -18,6 +20,7 @@ import ProfilePage from './pages/ProfilePage/profile-page'
 function App() {
 
   return (
+    
     <AuthProvider>
       <BrowserRouter>
         <Routes>

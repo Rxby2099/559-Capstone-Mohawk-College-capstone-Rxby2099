@@ -99,7 +99,7 @@ export default function RegistrationForm() {
 
         const data = await resp.json();
         console.log("Registration response:", data);
-
+        console.log("status:", resp.status, "message:", data.message)
         // Checks if the response was okay and awaits
         if (resp.ok && data.session) {
             await supabase.auth.setSession({
@@ -113,9 +113,13 @@ export default function RegistrationForm() {
             setUsernameToken('Username is already taken!');
         }
 
-        // Check if username is in use
+        // Check if email is in use
         else if (data.message === 'Email already in use'){
             setEmailToken('Email is already taken!')
+        }
+
+        else {
+            setMissingFields(data.error || data.message || 'Registration failed');
         }
         
     }
