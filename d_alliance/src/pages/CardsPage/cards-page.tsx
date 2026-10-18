@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
 
+
 // Card object containing the cards id, name, and title
 type Card = { id: number; name: string; title: string }
 
@@ -23,6 +24,7 @@ export default function CardsPage() {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState <string | null>(null);
+
 
     useEffect(() =>{
         let cancelled = false
@@ -62,6 +64,7 @@ export default function CardsPage() {
         }
 
         loadCards();
+        window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'smooth'})
 
         return function cleanup(){
             cancelled = true
@@ -87,6 +90,75 @@ export default function CardsPage() {
             <Header/>
             <div className = "cardPageContainer">
                 {error && <p>{error}</p>}
+
+                <div className= "searchSection">
+                    <form>
+                        <label htmlFor='searchBar'>Search</label>
+                        <input type="text" id="searchBar" name="searchBar" placeholder="Search character..."></input>
+                        <button className='searchButton'>Search</button>
+                        <div className='searchOptions'>
+                            <div className='sorting'>
+                                <label htmlFor = "sort">Sort</label>
+                                <select name="sort" id="sort" required>
+                                    <option value="">-- Please select an option --</option>
+                                    <option value="newest">Newest to Oldest</option>
+                                    <option value="oldest">Oldest to Newest</option>
+                                    <option value="alpha">Alphabetical (A-Z)</option>
+                                    <option value="alphaBack">Alphabetical (Z-A)</option>
+                                </select>
+                            </div>
+                            <div className='filtering'>
+                                <label htmlFor='filters'>Filter</label>
+                                <div className='filters'>
+                                    <label htmlFor='str'>Str</label>
+                                    <input type="checkbox" id="str" name="str" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Agl</label>
+                                    <input type="checkbox" id="agl" name="agl" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Teq</label>
+                                    <input type="checkbox" id="teq" name="teq" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Int</label>
+                                    <input type="checkbox" id="int" name="int" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Phy</label>
+                                    <input type="checkbox" id="phy" name="phy" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Super</label>
+                                    <input type="checkbox" id="super" name="super" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor='str'>Extreme</label>
+                                    <input type="checkbox" id="extreme" name="extreme" value="" checked></input>
+
+                                    <p>|</p>
+
+                                    <label htmlFor = "categories">Category</label>
+                                    <select name="categories" id="categories" required>
+                                        <option value="">-- Please select an option --</option>
+                                        <option value="">All Categories</option>
+                                    </select>
+
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </form>
+
+                </div>
 
                 <div className = "cardList">
                     {cards.map(card => (

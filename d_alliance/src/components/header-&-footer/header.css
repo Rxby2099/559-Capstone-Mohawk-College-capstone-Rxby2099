@@ -25,7 +25,7 @@ header {
     font-family: 'Saiyan Sans', sans-serif;
     font-size: clamp(26px, 4vw, 45px);
     white-space: nowrap;
-    color: #f07800;
+    color: #CA3500;
     -webkit-text-stroke: 1px #ffffff;
     letter-spacing: 2.7px;
 }
@@ -89,7 +89,8 @@ header nav li a:hover {
 
 #profileLink:hover{
     color: #d5ffff;
-    text-decoration: underline #d5ffff;  
+    text-decoration: underline #d5ffff;
+    cursor: pointer
 }
 
 @media (max-width: 700px) {

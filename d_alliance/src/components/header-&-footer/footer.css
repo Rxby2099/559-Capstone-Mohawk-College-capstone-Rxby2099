@@ -11,44 +11,18 @@ footer {
     border-top: 1px solid #CA3500;
 }
 
-footer nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-footer nav li a {
-    display: block;
+footer p{
+    font-family: 'Saiyan Sans', sans-serif;
+    font-size: clamp(26px, 4vw, 45px);
+    white-space: nowrap;
     color: #CA3500;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 14px 16px;
+    -webkit-text-stroke: 1px #ffffff;
+    letter-spacing: 2.7px;
 }
 
-footer nav li a:hover {
-    color: #d5ffff;
-    text-decoration: underline #d5ffff;
-}
 
-footer nav li p {
-    display: block;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
-}
-
-@media (max-width: 500px) {
-    footer nav li a {
-        font-size: 15px;
-        padding: 10px 8px;
-    }
-
-    footer nav li p {
-        padding: 10px 0;
+@media (max-width: 700px) {
+    footer {
+        padding: 0 10px;
     }
 }
