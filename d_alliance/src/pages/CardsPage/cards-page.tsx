@@ -90,7 +90,7 @@ export default function CardsPage() {
             <Header/>
             <div className = "cardPageContainer">
                 {error && <p>{error}</p>}
-
+                <h1 className='title'>Cards</h1>
                 <div className= "searchSection">
                     <form>
                         <label htmlFor='searchBar'>Search</label>
