@@ -1,5 +1,3 @@
-@import url('https://fonts.cdnfonts.com/css/saiyan-sans');
-
 #landingPageWrapper{
     display: flex;
     flex: 1;
@@ -10,9 +8,6 @@
 
 #newsAndDescripion{
     flex:1;
-    border-top: 2px solid red;
-    border-left: 2px solid red;
-    border-bottom: 2px solid red;
 }
 
 #verticalSeparator{
@@ -22,17 +17,21 @@
     margin-top: 7%;
 }
 
+#horizontalSeparator{
+    background: linear-gradient(to right, transparent, #CA3500 20%, #CA3500 80%, transparent);
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 2px;
+}
+
 #recentUnits{
     flex: 1;
-    border-top: 2px solid blue;
-    border-right: 2px solid blue;
-    border-bottom: 2px solid blue;
 }
 
 .titles{
     text-align: center;
     font-family: 'Saiyan Sans', sans-serif;
-    font-size: 50px;
+    font-size: clamp(32px, 6vw, 50px);
     color: #CA3500;
     letter-spacing: 1.5px;
     -webkit-text-stroke: 1px white;
@@ -41,7 +40,7 @@
 .subtitles{
     text-align: center;
     font-family: 'Saiyan Sans', sans-serif;
-    font-size: 40px;
+    font-size: clamp(26px, 4.5vw, 40px);
     color: #CA3500;
     letter-spacing: 1.5px;
     -webkit-text-stroke: 1px white;
@@ -51,7 +50,7 @@
     margin: 3%;
     padding: 3%;
     background-color: #d5ffff ;
-    border: 2px solid #CA3500;
+    border: 4px solid #CA3500;
     border-radius: 8px;
     justify-content: center;
     font-size: 16px;
@@ -70,12 +69,11 @@
     justify-content: center; 
     border-radius: 8px;
     background-color: #d5ffff;
-    border: 2px solid #CA3500;
+    border: 4px solid #CA3500;
 
 }
 
 #informationSection{
-    border: 2px solid green;
     min-height: 80vh;
     margin: 50px;
     
@@ -91,18 +89,17 @@
 
 #infoGrid div{
     text-align: center;
-    border: 1px solid yellow;
     min-height: 60vh;
     padding: 3%;
     background-color: #d5ffff ;
-    border: 2px solid #CA3500;
+    border: 4px solid #CA3500;
     border-radius: 8px;
     min-width: 0;
     overflow-wrap: break-word;
     text-align: left;
 }
 
-#infoGrid p, ul{
+#infoGrid p, #infoGrid ul{
     color: #CA3500;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -115,6 +112,36 @@
 #cardsCol li{
     list-style: circle;
     list-style-position: inside;
+}
+
+@media (max-width: 900px) {
+    #landingPageWrapper{
+        flex-direction: column;
+        height: auto;
+        margin: 20px;
+    }
+
+    #verticalSeparator{
+        width: 80%;
+        height: 2px;
+        margin: 20px auto;
+        background: linear-gradient(to right, transparent, #CA3500 20%, #CA3500 80%, transparent);
+    }
+
+    #informationSection{
+        margin: 20px;
+        min-height: auto;
+    }
+
+    #infoGrid{
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0;
+    }
+
+    #infoGrid div{
+        min-height: auto;
+    }
 }
 
 

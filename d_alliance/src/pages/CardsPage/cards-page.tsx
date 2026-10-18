@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react'
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
 
+// Card object containing the cards id, name, and title
 type Card = { id: number; name: string; title: string }
 
+// The card response which will contain the cards, the page (100 cards each) the pageSize, the total cards 
+// in the db from the select statemetn, and the total amount of pages.
 type CardResp = {
     data: Card[]
     page: number
@@ -24,6 +27,12 @@ export default function CardsPage() {
     useEffect(() =>{
         let cancelled = false
         
+        /**
+         * 
+         * @returns cleanup() - a return function that always runs whenever the page loads and will set cancelled to true in
+         * order to prevent reace conditons like someone hititng back or next too fast twice, which would lead to the 2nd pages
+         * data showing instead of the 3rds despite saying page 3. 
+         */
         async function loadCards(){
             setLoading(true);
             setError(null);
@@ -53,17 +62,22 @@ export default function CardsPage() {
         }
 
         loadCards();
-        window.scrollTo({top: 0})
 
         return function cleanup(){
             cancelled = true
         }
     }, [page])
 
+    /**
+     * Sets the page one page back
+     */
     function handleBackButton(){
         setPage(page - 1)
     }
 
+    /**
+     * Sets the page one page forward
+     */
     function handleNextButton(){
         setPage(page + 1)
     }
@@ -83,9 +97,9 @@ export default function CardsPage() {
                     ))}
                 </div>
                 <div className = "listButtons">
-                    <button onClick={handleBackButton} disabled = {page <= 1 || loading}>BACK&nbsp;|</button>
-                    <button onClick={handleNextButton} disabled = {page >= totalPages || loading}>&nbsp;NEXT&nbsp;</button>
-                    <span>Page {page} / {totalPages}</span>
+                    <button onClick={handleBackButton} disabled = {page <= 1 || loading} className='backButton'>BACK</button>
+                    <span>&nbsp;Page {page} / {totalPages}&nbsp;</span>
+                    <button onClick={handleNextButton} disabled = {page >= totalPages || loading}className='nextButton'>NEXT</button>
                 </div>
             </div>
             <Footer/>

@@ -102,8 +102,6 @@ export default function ProfilePage() {
                             <TeamCard name = "Goku Fam"/>
                         </div>
                     </div>
-                    
-
                     <button id = 'logoutButton' type='button' onClick={handleLogout}>Logout!</button>
                 </div>
             </main>

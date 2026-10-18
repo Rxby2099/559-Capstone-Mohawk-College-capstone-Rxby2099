@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 export default function Footer(){
     return(
         <footer>
-            <div id = "navBar">
+            <div id = "footerNav">
                 <nav>
                     <ul>
                         <li><Link to= "#">Terms of Service</Link></li>

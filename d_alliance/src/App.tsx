@@ -15,7 +15,6 @@ import TeamsPage from './pages/TeamsPage/teams-page'
 import CardsPage from './pages/CardsPage/cards-page'
 import ProfilePage from './pages/ProfilePage/profile-page'
 
-
 function App() {
 
   return (

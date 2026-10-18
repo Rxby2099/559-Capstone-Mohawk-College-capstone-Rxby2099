@@ -54,7 +54,7 @@ export default function LandingPage() {
                     <div id = "verticalSeparator"></div>
 
                     <div id = "recentUnits">
-                        <h2 className = "titles">Recent Units:</h2>
+                        <h2 className = "titles">Recent Units</h2>
 
                         <div id = "recentIcons">
                            
@@ -65,6 +65,9 @@ export default function LandingPage() {
                     </div>
                     
                 </div>
+
+                <div id = "horizontalSeparator"></div>
+
                 <div id = "informationSection">
                     <div id = "heading">
                         <h2 className = "titles">What You'll Find Here</h2>

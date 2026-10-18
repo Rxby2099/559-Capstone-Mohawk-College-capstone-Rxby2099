@@ -15,15 +15,13 @@ export default function Header(){
                     <img src = {starImage} alt = "1 star"/> 
                     <p>DokkanAlliance</p>
             </div>
-            <div id = "navBar">
+            <div id = "headerNav">
                 <nav>
                     <ul>
                         <li><Link to= "/dashboard">Home</Link></li>
                         <li><Link to= "/cards">Cards</Link></li>
                         <li><Link to= "/teams">Teams</Link></li>
-                        <li><Link to= "#">About us</Link></li>
                     </ul>
-                    
                 </nav>
             </div>
             <div id = "viewProfile">

@@ -1,18 +1,85 @@
+.cardPageContainer {
+    padding: 2%;
+}
+
 .cardList {
+    --accent: #CA3500;
+    --surface: #d5ffff;
+    --columns: 3;
     --gap: 2rem;
-    --rule: linear-gradient(to bottom, transparent, #CA3500 20%, #CA3500 80%, transparent);
+    --col-width: calc((100% - (var(--columns) - 1) * var(--gap)) / var(--columns));
+    --rule: linear-gradient(to bottom, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
 
-    background-color: #d5ffff;
-    border: 2px solid #CA3500;
-    column-count: 3;
+    padding: 1%;
+    border: 4px solid var(--accent);
+    border-radius: 10px;
+    background-color: var(--surface);
+    color: #CA3500;
+    column-count: var(--columns);
     column-gap: var(--gap);
-
     background-image: var(--rule), var(--rule);
     background-repeat: no-repeat;
     background-size: 1px 100%;
     background-origin: content-box;
     background-position:
-        calc((100% - var(--gap)) / 3 + var(--gap) / 2) 0,
-        calc((100% - var(--gap)) / 3 * 2 + var(--gap) * 1.5) 0;
+        calc(var(--col-width) + var(--gap) / 2) 0,
+        calc(var(--col-width) * 2 + var(--gap) * 1.5) 0;
 }
 
+.listButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nextButton{
+    align-self: flex-end;
+    margin: 10px;
+    width: 90px;
+    padding: 9px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
+
+.nextButton:hover{
+    color: #CA3500;
+    background-color: #ffffff;
+    border: 1px solid #CA3500;
+}
+
+.backButton{
+    align-self: flex-end;
+    margin: 10px;
+    width: 90px;
+    padding: 9px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
+
+.backButton:hover{
+    color: #CA3500;
+    background-color: #ffffff;
+    border: 1px solid #CA3500;
+}
+
+@media (max-width: 900px) {
+    .cardList {
+        --columns: 2;
+        background-image: var(--rule);
+    }
+}
+
+@media (max-width: 560px) {
+    .cardList {
+        --columns: 1;
+        background-image: none;
+    }
+}
