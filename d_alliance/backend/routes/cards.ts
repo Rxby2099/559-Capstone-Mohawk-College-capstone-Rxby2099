@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
 import dokkanDb from '../lib/dokkan-db';
 
 const cardRouter = Router();
@@ -27,6 +27,30 @@ const PLAYABLE_FILTER =`
                     WHERE r.card_id = cards.id
                     AND r.type IN ('CardAwakeningRoute::Zet', 'CardAwakeningRoute::Dokkan'))
 `;
+
+const FROM_CARDS = 'FROM cards JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id';
+
+const TYPE_DIGIT: Record<string, number> = {agl: 0, teq: 1, int: 2, str: 3, phy: 4};
+
+const CLASS_DIGIT: Record<string, number> = {super: 1, extreme: 2}
+
+const SORTS: Record<string, string> = {
+    newest: 'cards.open_at DESC, cards.id DESC',
+    oldest: 'cards.open_at ASC, cards.id ASC',
+    alpha: 'cards.name COLLATE NOCASE ASC, cards.id ASC',
+    alphaBack: 'cards.name COLLATE NOCASE DESC, cards.id DESC',
+};
+
+/**
+ * A check through the dictionaries of type and class to see if the dictionary contains the key we enter.
+ * @param obj - dictionary we are checking (class or type)
+ * @param key - key we're checking the dictionary for
+ * @returns returns true or false depending on if the item is in the dictionary
+ */
+const has = (obj: object, key: string) => Object.keys(obj).includes(key);
+
+
+
 
 /**
  * Grabs one page of 100 playable cards from newest to oldest. The frontend
