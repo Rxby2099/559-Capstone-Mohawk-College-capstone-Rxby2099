@@ -6,6 +6,9 @@ import { defineConfig } from 'vitest/config';
 // https://vite.dev/config/
 export default defineConfig({
   server: {
+    watch: {
+      ignored: ['**/backend/**'],
+    },
     port: 5173,
     proxy:{
       '/api': 'http://localhost:8000'

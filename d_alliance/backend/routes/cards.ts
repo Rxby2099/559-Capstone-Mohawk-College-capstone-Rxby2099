@@ -41,6 +41,9 @@ const SORTS: Record<string, string> = {
     alphaBack: 'cards.name COLLATE NOCASE DESC, cards.id DESC',
 };
 
+
+
+
 /**
  * A check through the dictionaries of type and class to see if the dictionary contains the key we enter.
  * @param obj - dictionary we are checking (class or type)
@@ -53,6 +56,63 @@ const has = (obj: object, key: string) => Object.keys(obj).includes(key);
 
 
 /**
+ * Reads a param like "teq, agl, phy" into a list of known vals. returns undefined if the param wasnt sent and has an empty list if it was sent with nothing valid / found no matches
+ * @param value - the string being checked
+ * @param allowed - the dictionary being checked through to verify if the value exists within it
+ * @returns a number array with the digit values for the filter types, or undefined if the value is not of type string
+ */
+function parseList(value: unknown, allowed: Record<string, number>): number[] | undefined{
+    if(typeof value !== 'string') return undefined;
+    return value.split(',')
+    .map(v => v.trim().toLowerCase())
+    .filter(v => has(allowed, v))
+    .map(v => allowed[v]);
+};
+
+function buildFilters(query: Request['query']){
+    const conditions: string[] = [];
+    const params: (string | number)[] = [];
+
+    // Search matches to either card OR title, and will still recognize
+    // chars like % and _ as literal text rather than as the SQL special chars.
+    const search = typeof query.search === 'string' ? query.search.trim() : '';
+
+    if(search){
+        const pattern = `%${search.replace(/[\\%_]/g, '\\$&')}%`
+        conditions.push(`(cards.name LIKE ? ESCAPE '\\' OR ls.name LIKE ? ESCAPE '\\')`);
+        params.push(pattern, pattern);
+    }
+
+    const classes = parseList(query.classes, CLASS_DIGIT);
+    const types = parseList(query.types, TYPE_DIGIT);
+
+    if(classes || types){
+        const classDigits = classes ?? Object.values(CLASS_DIGIT);
+        const typeDigits = types ?? Object.values(TYPE_DIGIT);
+        const elements = typeDigits.flatMap(c => classDigits.map(t => c * 10 + t));
+
+        if(elements.length === 0){
+            conditions.push('0 = 1');
+        }
+        else{
+            conditions.push(`cards.element IN (${elements.map(() => '?').join(',')})`);
+        }
+
+        params.push(...elements);
+    }
+
+    const categoryId = parseInt(query.category as string, 10);
+    if(Number.isInteger(categoryId) && categoryId > 0){
+        conditions.push(`EXISTS (SELECT 1 FROM card_card_categories cc
+            WHERE cc.card_id = cards.id AND cc.card_category_id = ?)`);
+
+        params.push(categoryId);
+    }
+
+    return { where: conditions.length ? ` AND ${conditions.join(' AND ')}` : '', params};
+}
+
+/**
  * Grabs one page of 100 playable cards from newest to oldest. The frontend
  * requests the next or previous page.
  */
@@ -60,11 +120,15 @@ cardRouter.get('/', (req, resp) => {
     // converts query param into an int to validate the page number
     const requested = parseInt(req.query.page as string, 10);
     const page = Number.isInteger(requested) && requested > 0 ? requested : 1;
+    const { where, params } = buildFilters(req.query);
+
+    const sortKey = typeof req.query.sort === 'string' ? req.query.sort: '';
+    const orderBy = has(SORTS, sortKey) ? SORTS[sortKey] : SORTS.newest;
 
     // counts every matching card to find out how many pages exist
     const { total } = dokkanDb
-        .prepare(`SELECT COUNT(*) AS total FROM cards WHERE ${PLAYABLE_FILTER}`)
-        .get() as { total: number };
+        .prepare(`SELECT COUNT(*) AS total ${FROM_CARDS} WHERE ${PLAYABLE_FILTER}${where}`)
+        .get(...params) as { total: number}; 
 
     // Round up so that the last page still shows cards even if there isnt 100
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -76,32 +140,21 @@ cardRouter.get('/', (req, resp) => {
             cards.id,
             cards.name,
             ls.name AS title
-        FROM cards
-        JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id
-        WHERE ${PLAYABLE_FILTER}
-        ORDER BY cards.open_at DESC, cards.id DESC
-        LIMIT ? OFFSET ?`).all(PAGE_SIZE, (page - 1) * PAGE_SIZE);
+        ${FROM_CARDS}
+        WHERE ${PLAYABLE_FILTER}${where}
+        ORDER BY ${orderBy}
+        LIMIT ? OFFSET ?`).all(...params, PAGE_SIZE, (page - 1) * PAGE_SIZE);
     
-
-        // Initial query that will probably 
-        // const data = dokkanDb.prepare(`
-        // SELECT 
-        //     cards.id,
-        //     cards.name,
-        //     ls.name AS title,
-        //     cards.rarity,
-        //     cards.element,
-        //     cards.cost,
-        //     cards.hp_max,
-        //     cards.atk_max,
-        //     cards.def_max
-        // FROM cards
-        // JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id
-        // WHERE ${PLAYABLE_FILTER}
-        // ORDER BY cards.open_at DESC, cards.id DESC
-        // LIMIT ? OFFSET ?`).all(PAGE_SIZE, (page - 1) * PAGE_SIZE);
-
     resp.json({ data, page, pageSize: PAGE_SIZE, total, totalPages })
+});
+
+cardRouter.get('/categories', (_req, res) =>{
+    const categories = dokkanDb.prepare(`
+        SELECT id, name FROM card_categories
+        WHERE open_at <= datetime('now') 
+        ORDER BY name COLLATE NOCASE`).all();
+
+    res.json(categories);
 });
 
 export default cardRouter;
