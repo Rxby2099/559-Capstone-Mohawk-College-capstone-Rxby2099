@@ -28,10 +28,13 @@ const PLAYABLE_FILTER =`
                     AND r.type IN ('CardAwakeningRoute::Zet', 'CardAwakeningRoute::Dokkan'))
 `;
 
+// Does the join to grab the card's name and title
 const FROM_CARDS = 'FROM cards JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id';
 
+// a dictionary of the types and their associated number in the db
 const TYPE_DIGIT: Record<string, number> = {agl: 0, teq: 1, int: 2, str: 3, phy: 4};
 
+// a dictionary of the classes and their associated number in the db
 const CLASS_DIGIT: Record<string, number> = {super: 1, extreme: 2}
 
 const SORTS: Record<string, string> = {
@@ -51,8 +54,6 @@ const SORTS: Record<string, string> = {
  * @returns returns true or false depending on if the item is in the dictionary
  */
 const has = (obj: object, key: string) => Object.keys(obj).includes(key);
-
-
 
 
 /**
@@ -89,7 +90,7 @@ function buildFilters(query: Request['query']){
     if(classes || types){
         const classDigits = classes ?? Object.values(CLASS_DIGIT);
         const typeDigits = types ?? Object.values(TYPE_DIGIT);
-        const elements = typeDigits.flatMap(c => classDigits.map(t => c * 10 + t));
+        const elements = classDigits.flatMap(c => typeDigits.map(t => c * 10 + t));
 
         if(elements.length === 0){
             conditions.push('0 = 1');

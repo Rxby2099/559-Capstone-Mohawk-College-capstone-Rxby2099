@@ -1,5 +1,5 @@
 import './cards-page.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type SubmitEvent } from 'react'
 
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
@@ -7,7 +7,7 @@ import Footer from '@/components/header-&-footer/footer'
 
 // Card object containing the cards id, name, and title
 type Card = { id: number; name: string; title: string }
-
+type Category = { id: number; name: string};
 // The card response which will contain the cards, the page (100 cards each) the pageSize, the total cards 
 // in the db from the select statemetn, and the total amount of pages.
 type CardResp = {
@@ -18,13 +18,38 @@ type CardResp = {
     totalPages: number
 }
 
+const FILTER_OPTIONS = [
+    {id: 'agl', label: 'Agl', group: 'type'},
+    {id: 'str', label: 'Str', group: 'type'},
+    {id: 'phy', label: 'Phy', group: 'type'},
+    {id: 'int', label: 'Int', group: 'type'},
+    {id: 'teq', label: 'Teq', group: 'type'},
+    {id: 'super', label: 'Super', group: 'class'},
+    {id: 'extreme', label: 'Extreme', group: 'class'}
+] as const
+
+const CLASSES: string[] = FILTER_OPTIONS.filter(o => o.group === 'class').map(o => o.id);
+const TYPES: string[] = FILTER_OPTIONS.filter(o => o.group === 'type').map(o => o.id);
+
 export default function CardsPage() {
     const [cards, setCards] = useState<Card[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState <string | null>(null);
+    const [searchInput, setSearchInput] = useState('');
+    const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('newest');
+    const [classes, setClasses] = useState<string[]>(CLASSES);
+    const [types, setTypes] = useState<string[]>(TYPES);
+    const [category, setCategory] = useState('')
+    const [categories, setCategories] = useState<Category[]>([]);
 
+    useEffect(() => {
+        fetch('/api/cards/categories').then(res => (res.ok ? res.json() : []))
+            .then(setCategories)
+            .catch(() => setCategories([]))
+    }, []);
 
     useEffect(() =>{
         let cancelled = false
@@ -40,7 +65,16 @@ export default function CardsPage() {
             setError(null);
 
             try{
-                const res = await fetch(`/api/cards?page=${page}`);
+                const params = new URLSearchParams({
+                    page: String(page),
+                    search,
+                    sort,
+                    classes: classes.join(','),
+                    types: types.join(','),
+                    category,
+                })
+
+                const res = await fetch(`/api/cards?${params}`);
                 if(!res.ok){
                     throw new Error(`Request failed (${res.status})`)
                 }
@@ -64,12 +98,12 @@ export default function CardsPage() {
         }
 
         loadCards();
-        window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'smooth'})
+    
 
         return function cleanup(){
             cancelled = true
         }
-    }, [page])
+    }, [page, search, sort, classes, types, category])
 
     /**
      * Sets the page one page back
@@ -85,6 +119,26 @@ export default function CardsPage() {
         setPage(page + 1)
     }
 
+    function handleSearch(e: SubmitEvent<HTMLFormElement>){
+        e.preventDefault()
+        setSearch(searchInput.trim())
+        setPage(1)
+    }
+
+    function toggle(list: string[], value: string){
+        return list.includes(value) ? list.filter(v => v !== value) : [...list, value]
+    }
+
+    function handleFilterToggle(group: 'class' | 'type', id: string){
+        if(group === 'class'){
+            setClasses(prev => toggle(prev, id))
+        }    
+        else {
+            setTypes(prev => toggle(prev, id))
+        }
+        setPage(1)
+    }
+
     return(
         <>
             <Header/>
@@ -92,15 +146,24 @@ export default function CardsPage() {
                 {error && <p>{error}</p>}
                 <h1 className='title'>Cards</h1>
                 <div className= "searchSection">
-                    <form>
+                    <form onSubmit={handleSearch}>
                         <label htmlFor='searchBar'>Search</label>
-                        <input type="text" id="searchBar" name="searchBar" placeholder="Search character..."></input>
-                        <button className='searchButton'>Search</button>
+                        <input 
+                            type="text" 
+                            id="searchBar" 
+                            name="searchBar" 
+                            placeholder="Search character..."
+                            value = {searchInput} onChange={e => setSearchInput(e.target.value)}>
+                        </input>
+                        <button className='searchButton' type='submit'>Search</button>
                         <div className='searchOptions'>
                             <div className='sorting'>
                                 <label htmlFor = "sort">Sort</label>
-                                <select name="sort" id="sort" required>
-                                    <option value="">-- Please select an option --</option>
+                                <select 
+                                    name="sort" 
+                                    id="sort" 
+                                    value = {sort} 
+                                    onChange={e => {setSort(e.target.value); setPage(1)}}>
                                     <option value="newest">Newest to Oldest</option>
                                     <option value="oldest">Oldest to Newest</option>
                                     <option value="alpha">Alphabetical (A-Z)</option>
@@ -110,45 +173,32 @@ export default function CardsPage() {
                             <div className='filtering'>
                                 <label htmlFor='filters'>Filter</label>
                                 <div className='filters'>
-                                    <label htmlFor='str'>Str</label>
-                                    <input type="checkbox" id="str" name="str" value="" checked></input>
+                                    {FILTER_OPTIONS.map((opt, i) => (
+                                        <span key = {opt.id} style ={{display: 'contents'}}>
+                                            {i > 0 && <p>|</p>}
+                                            <label htmlFor={opt.id}>{opt.label}</label>
+                                            <input 
+                                                type="checkbox" 
+                                                id={opt.id} 
+                                                name={opt.id} 
+                                                checked= {(opt.group === 'class' ? classes : types).includes(opt.id)}
+                                                onChange={() => handleFilterToggle(opt.group, opt.id)}>
+                                            </input>
+                                        </span>
+                                    ))}
 
                                     <p>|</p>
-
-                                    <label htmlFor='str'>Agl</label>
-                                    <input type="checkbox" id="agl" name="agl" value="" checked></input>
-
-                                    <p>|</p>
-
-                                    <label htmlFor='str'>Teq</label>
-                                    <input type="checkbox" id="teq" name="teq" value="" checked></input>
-
-                                    <p>|</p>
-
-                                    <label htmlFor='str'>Int</label>
-                                    <input type="checkbox" id="int" name="int" value="" checked></input>
-
-                                    <p>|</p>
-
-                                    <label htmlFor='str'>Phy</label>
-                                    <input type="checkbox" id="phy" name="phy" value="" checked></input>
-
-                                    <p>|</p>
-
-                                    <label htmlFor='str'>Super</label>
-                                    <input type="checkbox" id="super" name="super" value="" checked></input>
-
-                                    <p>|</p>
-
-                                    <label htmlFor='str'>Extreme</label>
-                                    <input type="checkbox" id="extreme" name="extreme" value="" checked></input>
-
-                                    <p>|</p>
-
+                                    
                                     <label htmlFor = "categories">Category</label>
-                                    <select name="categories" id="categories" required>
-                                        <option value="">-- Please select an option --</option>
+                                    <select 
+                                        name="categories" 
+                                        id="categories" 
+                                        value = {category}
+                                        onChange={e => {setCategory(e.target.value); setPage(1)}}>
                                         <option value="">All Categories</option>
+                                        {categories.map(c => (
+                                            <option key={c.id} value = {c.id}>{c.name}</option>
+                                        ))}
                                     </select>
 
                                 </div>
@@ -161,6 +211,7 @@ export default function CardsPage() {
                 </div>
 
                 <div className = "cardList">
+                    {!loading && !error && cards.length === 0 && <p> No haracters found.</p>}
                     {cards.map(card => (
                         <div key = {card.id} className = "cardItem">
                             <span className="cardTitle">{card.title}&nbsp;|&nbsp;</span>
