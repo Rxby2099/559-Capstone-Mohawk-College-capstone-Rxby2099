@@ -6,8 +6,15 @@ import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
 
 // Card object containing the cards id, name, and title
-type Card = { id: number; name: string; title: string }
-type Category = { id: number; name: string};
+type Card = { 
+    id: number; 
+    name: string; 
+    title: string 
+}
+type Category = { 
+    id: number; 
+    name: string
+};
 // The card response which will contain the cards, the page (100 cards each) the pageSize, the total cards 
 // in the db from the select statemetn, and the total amount of pages.
 type CardResp = {
