@@ -1,6 +1,7 @@
 import './cards-page.css'
 import { useEffect, useState, type SubmitEvent } from 'react'
 import { Link } from 'react-router-dom'
+import { API_URL } from '@/lib/api';
 
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
@@ -53,7 +54,7 @@ export default function CardsPage() {
     const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
-        fetch('/api/cards/categories').then(res => (res.ok ? res.json() : []))
+        fetch(`${API_URL}/api/cards/categories`).then(res => (res.ok ? res.json() : []))
             .then(setCategories)
             .catch(() => setCategories([]))
     }, []);
@@ -81,7 +82,7 @@ export default function CardsPage() {
                     category,
                 })
 
-                const res = await fetch(`/api/cards?${params}`);
+                const res = await fetch(`${API_URL}/api/cards?${params}`);
                 if(!res.ok){
                     throw new Error(`Request failed (${res.status})`)
                 }

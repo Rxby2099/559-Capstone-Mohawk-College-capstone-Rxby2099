@@ -5,10 +5,10 @@ import dokkanDb from './lib/dokkan-db';
 import cardRouter from './routes/cards';
 import characterRouter from './routes/character';
 
-const PORT = 8000;
+const PORT = process.env.PORT ?? 8000;
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173' })) 
+app.use(cors({ origin: process.env.FRONTEND_URL ?? 'http://localhost:5173' }))
 app.use(express.json()) 
 app.use('/api/cards', cardRouter);
 app.use('/api/character', characterRouter);

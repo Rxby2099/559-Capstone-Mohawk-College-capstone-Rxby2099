@@ -1,5 +1,5 @@
 import './character-page.css'
-
+import { API_URL } from '@/lib/api';
 import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
 import { useEffect, useState } from 'react'
@@ -46,7 +46,7 @@ export default function CharacterPage() {
             setLoading(true)
             setError(null)
             try{
-                const res = await fetch(`/api/character/${id}`);
+                const res = await fetch(`${API_URL}/api/character/${id}`);
 
                 if(!res.ok){
                     throw new Error(res.status === 404 ? 'Character not found' : `Request failed (${res.status})`)

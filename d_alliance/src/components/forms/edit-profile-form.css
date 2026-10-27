@@ -11,3 +11,24 @@
     z-index: 1000;
 }
 
+#editProfileForm form {
+    padding: 32px;
+    border: 4px solid #CA3500;
+    border-radius: 8px;
+    background-color: #d5ffff !important;
+    width: 100%;
+    max-width: 500px;
+    
+}
+
+#editProfileForm form button {
+    width: 100%;
+    padding: 9px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500 ;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}
+

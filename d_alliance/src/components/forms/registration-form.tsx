@@ -2,8 +2,7 @@ import "./log-reg-form.css"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import supabase from '@/lib/supabase-frontend'
-import { useNavigate } from "react-router-dom";
-
+import { API_URL } from '@/lib/api';
 
 /**
  * The function to export the registration form to be used on the LoginPage.
@@ -21,7 +20,6 @@ export default function RegistrationForm() {
     const [usernameToken, setUsernameToken] = useState('');
     const [emailToken, setEmailToken] = useState('');
 
-    const navigate = useNavigate();
     
     //Password Validation constants
     const digit = /[0-9]/
@@ -91,7 +89,7 @@ export default function RegistrationForm() {
         }
 
         // send the registration data to the database and run the signup function
-        const resp = await fetch("http://localhost:8000/signup", {
+        const resp = await fetch(`${API_URL || 'http://localhost:8000'}/signup`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(registrationData)
