@@ -84,14 +84,14 @@ export default function CharacterPage() {
                     <div>
                         <h1 className='characterTitle'>{character.title}</h1>
                         <h1 className='characterName'>{character.name}</h1>
-
+                        <br></br>
                         <div className='leaderSkillSection'>
                             <h3>--Leader Skill--</h3>
                             <p>{character.leaderSkill}</p>
                         </div>
-
+                        <br></br>
                         <div className='statsSection'>
-                            <h3>Stats</h3>
+                            <h3>--Stats--</h3>
                             <table className='statsTable'>
                                 <thead>
                                     <tr><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr>
@@ -112,9 +112,22 @@ export default function CharacterPage() {
                                 </tbody>
                             </table>
                         </div>
+                        <br></br>
                         <div className='superSection'>
-                            
+                            {character.supers.map((s, i) => (
+                                <div key = {i} className='superItem'>
+                                    <strong>--Super Attack: {s.name} ({s.kiNeeded} Ki)--</strong>
+                                    <p>{s.description}</p>
+                                </div>
+                            ))}
                         </div>
+                        <br></br>
+                        {character.passive && (
+                            <div className='passiveSection'>
+                                <h3>--Passive Skill: {character.passive.name}--</h3>
+                                <p>{character.passive.description}</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
