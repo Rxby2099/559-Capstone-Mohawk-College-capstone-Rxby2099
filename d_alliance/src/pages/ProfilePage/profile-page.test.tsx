@@ -18,7 +18,7 @@ vi.mock('@/context/AuthContext', () => ({
     useAuth: () => ({ user: { id: 'user-1' } })
 }));
 
-// Fake "users" row that the mocked supabase returns and updates
+// Fake user that the mocked supabase returns and updates
 let profile = { username: "OldName", email: "email@email.com", created_at: "2026-01-15T00:00:00Z" };
 
 /**
@@ -45,7 +45,7 @@ describe("Profile Page Testing", () => {
         }));
     });
 
-    test("FFT-5: Account details are displayed", async () => {
+    test("Testing if account details are displayed", async () => {
         render(<MemoryRouter><ProfilePage/></MemoryRouter>);
 
         expect(await screen.findByText("OldName")).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe("Profile Page Testing", () => {
     });
 
 
-    test("FFT-6: Account details updated successfully", async () => {
+    test("Testing if account details updated successfully", async () => {
         render(<MemoryRouter><ProfilePage/></MemoryRouter>);
         await screen.findByText("OldName");
 
