@@ -211,11 +211,13 @@ export default function CardsPage() {
                 </div>
 
                 <div className = "cardList">
-                    {!loading && !error && cards.length === 0 && <p> No haracters found.</p>}
+                    {!loading && !error && cards.length === 0 && <p> No characters found.</p>}
                     {cards.map(card => (
                         <div key = {card.id} className = "cardItem">
-                            <span className="cardTitle">{card.title}&nbsp;|&nbsp;</span>
-                            <span className="cardName">{card.name}</span>
+                            <a href = "#">
+                                <span className="cardTitle">{card.title}&nbsp;|&nbsp;</span>
+                                <span className="cardName">{card.name}</span>
+                            </a>
                         </div>
                     ))}
                 </div>

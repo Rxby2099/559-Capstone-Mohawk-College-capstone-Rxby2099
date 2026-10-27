@@ -105,6 +105,10 @@
     break-inside: avoid;
 }
 
+.cardItem:hover{
+    text-decoration: underline;
+}
+
 .searchButton,
 .backButton,
 .nextButton {
