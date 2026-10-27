@@ -76,7 +76,48 @@ export default function CharacterPage() {
     return(
         <>
             <Header/>
-                <p> cards page</p>
+            <div className='characterContainer'>
+                {loading && <p>Loading...</p>}
+                {error && <p>{error}</p>}
+
+                {character && (
+                    <div>
+                        <h1 className='characterTitle'>{character.title}</h1>
+                        <h1 className='characterName'>{character.name}</h1>
+
+                        <div className='leaderSkillSection'>
+                            <h3>--Leader Skill--</h3>
+                            <p>{character.leaderSkill}</p>
+                        </div>
+
+                        <div className='statsSection'>
+                            <h3>Stats</h3>
+                            <table className='statsTable'>
+                                <thead>
+                                    <tr><th></th><th>HP</th><th>ATK</th><th>DEF</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td><strong>55%</strong>&nbsp;</td>
+                                        <td>{character.stats.fiftyFive.hp}</td>
+                                        <td>{character.stats.fiftyFive.atk}</td>
+                                        <td>{character.stats.fiftyFive.def}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rainbow</strong>&nbsp;</td>
+                                        <td>{character.stats.rainbow.hp}</td>
+                                        <td>{character.stats.rainbow.atk}</td>
+                                        <td>{character.stats.rainbow.def}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className='superSection'>
+                            
+                        </div>
+                    </div>
+                )}
+            </div>
             <Footer/>
         </>
     )
