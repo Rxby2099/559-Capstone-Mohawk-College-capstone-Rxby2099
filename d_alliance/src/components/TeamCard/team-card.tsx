@@ -1,7 +1,4 @@
 import './team-card.css'
-
-import Header from '../header-&-footer/header'
-import Footer from '../header-&-footer/footer'
 import { Pencil, Trash2 } from 'lucide-react'
 import GokuImg from '@/assets/HiImGoku.jpg'
 import CharacterBox from '../character-box/character-box'

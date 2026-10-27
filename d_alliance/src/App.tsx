@@ -1,8 +1,8 @@
 // External imports
-import { useState } from 'react'
+// import { useState } from 'react'
 import './App.css'
-import { useEffect } from 'react'
-import supabase from './lib/supabase-frontend'
+// import { useEffect } from 'react'
+// import supabase from './lib/supabase-frontend'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthProvider } from './context/AuthContext'
 import SessionRouteLock from './components/RouteLocks/SessionRouteLock'
