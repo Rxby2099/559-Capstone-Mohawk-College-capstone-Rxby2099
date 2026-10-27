@@ -3,7 +3,7 @@ import cors from 'cors';
 import supabase from './supabase-backend';
 import dokkanDb from './lib/dokkan-db';
 import cardRouter from './routes/cards';
-
+import characterRouter from './routes/character';
 
 const PORT = 8000;
 const app = express();
@@ -11,6 +11,7 @@ const app = express();
 app.use(cors({ origin: 'http://localhost:5173' })) 
 app.use(express.json()) 
 app.use('/api/cards', cardRouter);
+app.use('/api/character', characterRouter);
 
 /**
  * Handles the signup functionality

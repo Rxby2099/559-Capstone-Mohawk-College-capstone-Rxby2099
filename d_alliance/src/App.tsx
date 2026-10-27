@@ -16,7 +16,7 @@ import LandingPage from './pages/LandingPage/landing-page'
 import TeamsPage from './pages/TeamsPage/teams-page'
 import CardsPage from './pages/CardsPage/cards-page'
 import ProfilePage from './pages/ProfilePage/profile-page'
-
+import CharacterPage from './pages/CharacterPage/character-page'
 function App() {
 
   return (
@@ -41,13 +41,16 @@ function App() {
               <SessionRouteLock><TeamsPage/></SessionRouteLock>
             } />
 
-            <Route path="/cards" element={<SessionRouteLock>
-              <CardsPage/>
-            </SessionRouteLock>
+            <Route path="/cards" element={
+              <SessionRouteLock><CardsPage/></SessionRouteLock>
             }/>
 
             <Route path="/profile" element={
               <SessionRouteLock><ProfilePage/></SessionRouteLock>
+            }/>
+
+            <Route path = "/characters/:id" element={
+              <SessionRouteLock><CharacterPage/></SessionRouteLock>
             }/>
 
         </Routes>

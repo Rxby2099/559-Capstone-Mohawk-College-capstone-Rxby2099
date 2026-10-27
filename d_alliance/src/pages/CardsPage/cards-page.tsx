@@ -1,9 +1,9 @@
 import './cards-page.css'
 import { useEffect, useState, type SubmitEvent } from 'react'
+import { Link } from 'react-router-dom'
 
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
-
 
 // Card object containing the cards id, name, and title
 type Card = { id: number; name: string; title: string }
@@ -214,10 +214,10 @@ export default function CardsPage() {
                     {!loading && !error && cards.length === 0 && <p> No characters found.</p>}
                     {cards.map(card => (
                         <div key = {card.id} className = "cardItem">
-                            <a href = "#">
+                            <Link to={`/characters/${card.id}`}>
                                 <span className="cardTitle">{card.title}&nbsp;|&nbsp;</span>
                                 <span className="cardName">{card.name}</span>
-                            </a>
+                            </Link>
                         </div>
                     ))}
                 </div>

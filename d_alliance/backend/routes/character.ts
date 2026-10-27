@@ -31,11 +31,12 @@ characterRouter.get('/:id', (req, res) =>{
         // Query to get a characters stats at rainbow aka 100% hidden potential
         const rainbowStats = dokkanDb.prepare(`
             SELECT
-                COALESCE(SUM(CASE WHEN e.type = 'PotentialEVENT::Hp' THEN e.additional_value END), 0) AS hp,
-                COALESCE(SUM(CASE WHEN e.type = 'PotentialEVENT::Atk' THEN e.additional_value END), 0) AS atk,
-                COALESCE(SUM(CASE WHEN e.type = 'PotentialEVENT::Defense' THEN e.additional_value END), 0) AS def
-            FROM potential_events e ON e.id = s.event_id
-            WHERE s.potential_board_id = ?`).get(character.id.boardId) as {hp: number; atk: number; def: number};
+                COALESCE(SUM(CASE WHEN e.type = 'PotentialEvent::Hp' THEN e.additional_value END), 0) AS hp,
+                COALESCE(SUM(CASE WHEN e.type = 'PotentialEvent::Atk' THEN e.additional_value END), 0) AS atk,
+                COALESCE(SUM(CASE WHEN e.type = 'PotentialEvent::Defense' THEN e.additional_value END), 0) AS def
+            FROM potential_squares s
+            JOIN potential_events e ON e.id = s.event_id
+            WHERE s.potential_board_id = ?`).get(character.boardId) as {hp: number; atk: number; def: number};
 
 
         // Query to get a characters suepr attacks, ki sphere requirement, name and description
@@ -57,4 +58,27 @@ characterRouter.get('/:id', (req, res) =>{
                 itemized_description AS description
             FROM passive_skill_sets WHERE id = ?`).get(character.passiveId)
 
-})
+        res.json({
+            id: character.id,
+            name: character.name,
+            title: character.title,
+            leaderSkill: character.leaderSkill,
+            supers,
+            passive,
+            stats: {
+                fiftyFive: {
+                    hp: character.hp + 2000,
+                    atk: character.atk + 2000,
+                    def: character.def + 2000
+                },
+                rainbow: {
+                    hp: character.hp + rainbowStats.hp,
+                    atk: character.atk + rainbowStats.atk,
+                    def: character.def + rainbowStats.def
+                },
+
+            }
+        });
+});
+
+export default characterRouter;
