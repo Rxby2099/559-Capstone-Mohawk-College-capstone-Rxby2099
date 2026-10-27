@@ -1,0 +1,182 @@
+{
+    "info": {
+      "name": "Dokkan Wiki API Tests",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "https://five59-capstone-mohawk-college-capstone.onrender.com"
+      },
+      {
+        "key": "characterId",
+        "value": "1"
+      }
+    ],
+    "item": [
+      {
+        "name": "APIT-1 Retrieve character list",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "const json = pm.response.json();",
+                "pm.test('Returns characters', () => pm.expect(json.data.length).to.be.above(0));",
+                "pm.collectionVariables.set('characterId', json.data[0].id);"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/cards"
+        }
+      },
+      {
+        "name": "APIT-2 Verify pagination limit",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "pm.test('Returns 100 characters', () => pm.expect(pm.response.json().data.length).to.eql(100));"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/cards?page=1"
+        }
+      },
+      {
+        "name": "APIT-4 Search characters by name",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "pm.test('Results match goku', () => {",
+                "  const data = pm.response.json().data;",
+                "  pm.expect(data.length).to.be.above(0);",
+                "  data.forEach(c => pm.expect((c.name + ' ' + c.title).toLowerCase()).to.include('goku'));",
+                "});"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/cards?search=goku"
+        }
+      },
+      {
+        "name": "APIT-5 Filter characters by type",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "const filtered = pm.response.json();",
+                "pm.sendRequest(pm.variables.replaceIn('{{baseUrl}}/api/cards'), (err, res) => {",
+                "  pm.test('STR characters returned', () => {",
+                "    pm.expect(filtered.total).to.be.above(0);",
+                "    pm.expect(filtered.total).to.be.below(res.json().total);",
+                "  });",
+                "});"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/cards?types=str"
+        }
+      },
+      {
+        "name": "APIT-6 Sort characters by release date",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "const newest = pm.response.json().data;",
+                "pm.sendRequest(pm.variables.replaceIn('{{baseUrl}}/api/cards?sort=oldest'), (err, res) => {",
+                "  pm.test('Newest and oldest sorts return different order', () => {",
+                "    pm.expect(newest[0].id).to.not.eql(res.json().data[0].id);",
+                "  });",
+                "});"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/cards?sort=newest"
+        }
+      },
+      {
+        "name": "APIT-7 Retrieve character detail",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "pm.test('Character data returned', () => {",
+                "  const json = pm.response.json();",
+                "  pm.expect(json).to.have.property('name');",
+                "  pm.expect(json).to.have.property('title');",
+                "});"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/character/{{characterId}}"
+        }
+      },
+      {
+        "name": "APIT-8 Rainbow stats returned",
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                "pm.test('Rainbow stats returned', () => {",
+                "  const rainbow = pm.response.json().stats.rainbow;",
+                "  pm.expect(rainbow).to.have.all.keys('hp', 'atk', 'def');",
+                "});"
+              ]
+            }
+          }
+        ],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": "{{baseUrl}}/api/character/{{characterId}}"
+        }
+      }
+    ]
+  }
