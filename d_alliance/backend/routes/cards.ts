@@ -6,6 +6,7 @@ const cardRouter = Router();
 // Cards shown on each page
 const PAGE_SIZE = 100;
 
+const MAX_IDS = 50;
 
 /**
  * Conditions in place to make sure only playable cards are displayed, due to 
@@ -113,6 +114,14 @@ function buildFilters(query: Request['query']){
     return { where: conditions.length ? ` AND ${conditions.join(' AND ')}` : '', params};
 }
 
+function parseIds(value: unknown): number[] {
+    if(typeof value !== 'string') return [];
+    const ids = value.split(',').map(v => Number(v.trim()))
+        .filter(n => Number.isInteger(n) && n > 0);
+    return [...new Set(ids)].slice(0,MAX_IDS);
+
+}
+
 /**
  * Grabs one page of 100 playable cards from newest to oldest. The frontend
  * requests the next or previous page.
@@ -156,6 +165,24 @@ cardRouter.get('/categories', (_req, res) =>{
         ORDER BY name COLLATE NOCASE`).all();
 
     res.json(categories);
+});
+
+cardRouter.get('/by-ids', (req, resp) => {
+    const ids = parseIds(req.query.ids);
+
+    if(ids.length === 0){
+        return resp.json([]);
+    }
+
+    const data = dokkanDb.prepare(`
+        SELECT
+            cards.id,
+            cards.name,
+            ls.name AS title
+        ${FROM_CARDS}
+        WHERE cards.id IN (${ids.map(() => '?').join(',')})`).all(...ids);
+    
+        resp.json(data);
 });
 
 export default cardRouter;
