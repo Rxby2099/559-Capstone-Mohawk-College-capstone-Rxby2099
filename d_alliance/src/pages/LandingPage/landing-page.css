@@ -46,7 +46,7 @@
     font-family: 'Saiyan Sans', sans-serif;
     font-size: clamp(26px, 4.5vw, 40px);
     letter-spacing: 1.5px;
-    -webkit-text-stroke: 1px white;
+    -webkit-text-stroke: 0.5px white;
     background: linear-gradient(to bottom, #FF8A3D 0%, #CA3500 100%);
     -webkit-background-clip: text;
     background-clip: text;

@@ -10,6 +10,7 @@ type Stats = {
     atk: number; 
     def: number
 };
+
 type Super = { 
     style: string; 
     kiNeeded: number; 

@@ -27,4 +27,4 @@ dist-ssr
 .env
 
 # game db
-backend/data/*.db
+backend/*.db
