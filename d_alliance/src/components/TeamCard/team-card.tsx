@@ -1,8 +1,7 @@
 import './team-card.css'
 import { Link } from 'react-router-dom'
 import { Pencil, Trash2 } from 'lucide-react'
-import GokuImg from '@/assets/HiImGoku.jpg'
-import CharacterBox from '../character-box/character-box'
+
 
 // To be added to as external db is connected to
 type TeamMember = {
