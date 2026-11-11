@@ -23,10 +23,20 @@
 
 .teamArray {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     background-color: #f07800;
-    border-radius: 0px 0px 8px 8px ;
+    border-radius: 0px 0px 8px 8px;
+    padding: 6px 10px;
 }
+
+.teamSlot {
+    color: #000000;
+    padding: 4px 0;
+    text-decoration: none;
+}
+
+.teamSlot:hover { text-decoration: underline; }
+.emptyTeamSlot { opacity: 0.6; font-style: italic; }
 
 .teamCardWrapper{
     margin-bottom: 5px;

@@ -1,14 +1,24 @@
 import './team-card.css'
+import { Link } from 'react-router-dom'
 import { Pencil, Trash2 } from 'lucide-react'
 import GokuImg from '@/assets/HiImGoku.jpg'
 import CharacterBox from '../character-box/character-box'
 
 // To be added to as external db is connected to
-type TeamCardProps = {
-    name: string;
+type TeamMember = {
+    id: number,
+    name: string,
+    title: string;
 }
 
-export default function TeamCard({name}: TeamCardProps) {
+type TeamCardProps = {
+    name: string;
+    members?: TeamMember[];
+}
+
+const TEAM_SIZE = 6;
+
+export default function TeamCard({name, members = [] }: TeamCardProps) {
     return(
         <>
             <div className='teamCardWrapper'>
@@ -19,8 +29,18 @@ export default function TeamCard({name}: TeamCardProps) {
                 </div>
                 <div className='teamArray'>
                     {Array.from({ 
-                        length: 6 }).map((_, i) => (<CharacterBox key={i} image= {GokuImg}  />
-                        ))}
+                        length: TEAM_SIZE }).map((_, i) =>  {
+                          const member = members[i];
+                          return member ? (
+                            <Link key = {member.id} to ={`/characters/${member.id}`} className = "teamSlot">
+                                <span className=' = "slotTitle'>{member.title}&nbsp;|&nbsp;</span>
+                                <span className=' = "slotName'>{member.name}</span>
+                            </Link>
+                          )  : (
+                            <div key ={`empty-${i}`} className='emptyTeamSlot'>Empty Slot</div>
+                          );
+                        }
+                        )}
                 </div>
             </div>
         </>
