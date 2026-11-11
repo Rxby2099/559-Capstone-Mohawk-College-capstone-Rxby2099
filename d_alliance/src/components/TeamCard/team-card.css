@@ -33,10 +33,13 @@
     color: #000000;
     padding: 4px 0;
     text-decoration: none;
+    display: block
 }
 
 .teamSlot:hover { text-decoration: underline; }
 .emptyTeamSlot { opacity: 0.6; font-style: italic; }
+
+.emptyTeamSlot:hover {text-decoration: none;}
 
 .teamCardWrapper{
     margin-bottom: 5px;

@@ -32,11 +32,11 @@ export default function TeamCard({name, members = [] }: TeamCardProps) {
                           const member = members[i];
                           return member ? (
                             <Link key = {member.id} to ={`/characters/${member.id}`} className = "teamSlot">
-                                <span className=' = "slotTitle'>{member.title}&nbsp;|&nbsp;</span>
-                                <span className=' = "slotName'>{member.name}</span>
+                                <span className = "slotTitle">{member.title}&nbsp;|&nbsp;</span>
+                                <span className = "slotName">{member.name}</span>
                             </Link>
                           )  : (
-                            <div key ={`empty-${i}`} className='emptyTeamSlot'>Empty Slot</div>
+                            <div key ={`empty-${i}`} className='teamSlot emptyTeamSlot'>Empty Slot</div>
                           );
                         }
                         )}
