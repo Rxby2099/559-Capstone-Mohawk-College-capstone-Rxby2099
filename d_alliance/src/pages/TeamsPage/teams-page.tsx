@@ -3,6 +3,9 @@ import './teams-page.css'
 import TeamCard from '@/components/TeamCard/team-card'
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
+import { use, useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
+import { fetchUserTeams } from '@/lib/teams'
 
 const SAMPLE_TEAMS = [
     {
@@ -21,6 +24,21 @@ const SAMPLE_TEAMS = [
 ]
 
 export default function TeamsPage() {
+    const {user} = useAuth();
+
+    useEffect(() => {
+        if(!user) return;
+        async function loadTeams() {
+            try{
+                const teams = await fetchUserTeams();
+                console.log(teams);
+            }
+            catch(error){
+                console.error('Error fetching teams: ', error);
+            }
+        }
+        loadTeams();
+    }, [user])
     return(
         <>
             <Header/>
