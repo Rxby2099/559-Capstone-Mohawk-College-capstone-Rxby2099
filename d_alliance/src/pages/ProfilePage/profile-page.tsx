@@ -5,7 +5,7 @@ import Footer from '../../components/header-&-footer/footer'
 import TeamCard from '../../components/TeamCard/team-card'
 import supabase from '@/lib/supabase-frontend'
 import { useNavigate } from 'react-router-dom'
-
+import { fetchTeamsAndCharacters, type Team } from '@/lib/teams'
 import gokuPic from '../../assets/HiImGoku.jpg'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
@@ -23,6 +23,7 @@ export default function ProfilePage() {
     const { user} = useAuth();
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [showEditProfile, setShowEditProfile] = useState(false);
+    const [teams, setTeams] = useState<Team[]>([]);
 
     /**
      * Queries the database to retrieve the users username, email and created_at time
@@ -49,6 +50,19 @@ export default function ProfilePage() {
 
     useEffect(() => {
         fetchProfile();
+    }, [user])
+
+    useEffect(() => {
+        if(!user) return;
+        async function loadTeams() {
+            try{
+                setTeams(await fetchTeamsAndCharacters());
+            }
+            catch(error){
+                console.error('Error fetching teams: ', error);
+            }
+        }
+        loadTeams();
     }, [user])
 
 
@@ -98,8 +112,9 @@ export default function ProfilePage() {
 
                         <div className='teamsSection'>
                             <h3 id = "teamTitle">Teams</h3>
-                            <TeamCard name = "DAIMA"/>
-                            <TeamCard name = "Goku Fam"/>
+                            {teams.map(team => (
+                                <TeamCard key = {team.id} name = {team.name} members = {team.members} />
+                            ))}
                         </div>
                     </div>
                     <button id = 'logoutButton' type='button' onClick={handleLogout}>Logout!</button>

@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {userEvent} from '@testing-library/user-event';
 import supabase from "@/lib/supabase-frontend";
 import { MemoryRouter } from "react-router-dom";
+import { fetchTeamsAndCharacters } from "@/lib/teams";
 
 vi.mock('@/lib/supabase-frontend', () => ({
     default: {
@@ -16,6 +17,10 @@ vi.mock('@/lib/supabase-frontend', () => ({
 
 vi.mock('@/context/AuthContext', () => ({
     useAuth: () => ({ user: { id: 'user-1' } })
+}));
+
+vi.mock('@/lib/teams', () => ({
+    fetchTeamsAndCharacters: vi.fn().mockResolvedValue([])
 }));
 
 // Fake user that the mocked supabase returns and updates
