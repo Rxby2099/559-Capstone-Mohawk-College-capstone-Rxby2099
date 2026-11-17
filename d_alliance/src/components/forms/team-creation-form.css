@@ -1,0 +1,20 @@
+#createTeamForm form {
+    padding: 32px;
+    border: 4px solid #CA3500;
+    border-radius: 8px;
+    background-color: #d5ffff !important;
+    width: 100%;
+    max-width: 500px;
+}
+
+#createTeamForm form button {
+    width: 100%;
+    padding: 9px;
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+}

@@ -14,3 +14,15 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
+
+.createTeamButton {
+    display: block;
+    margin: 0 auto 12px;
+    padding: 8px 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+}
