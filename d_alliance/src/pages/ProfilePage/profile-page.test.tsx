@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {userEvent} from '@testing-library/user-event';
 import supabase from "@/lib/supabase-frontend";
 import { MemoryRouter } from "react-router-dom";
-import { fetchTeamsAndCharacters } from "@/lib/teams";
+
 
 vi.mock('@/lib/supabase-frontend', () => ({
     default: {
