@@ -13,17 +13,18 @@ type TeamMember = {
 type TeamCardProps = {
     name: string;
     members?: (TeamMember | null)[];
+    onEdit?(): void;
 }
 
 const TEAM_SIZE = 6;
 
-export default function TeamCard({name, members = [] }: TeamCardProps) {
+export default function TeamCard({name, members = [], onEdit }: TeamCardProps) {
     return(
         <>
             <div className='teamCardWrapper'>
                 <div className='teamCard'>
                     <h3>{name}</h3>
-                    <button type='button'><Pencil size={16} /></button>
+                    <button type='button' aria-label='Edit team' onClick={onEdit}><Pencil size={16} /></button>
                     <button type='button'><Trash2 size={16} /></button>
                 </div>
                 <div className='teamArray'>
