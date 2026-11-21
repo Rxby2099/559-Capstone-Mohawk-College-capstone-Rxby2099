@@ -12,7 +12,7 @@ type TeamMember = {
 
 type TeamCardProps = {
     name: string;
-    members?: TeamMember[];
+    members?: (TeamMember | null)[];
 }
 
 const TEAM_SIZE = 6;
