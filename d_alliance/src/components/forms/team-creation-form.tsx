@@ -2,7 +2,7 @@ import "./log-reg-form.css"
 import "./edit-profile-form.css"
 import "./team-creation-form.css"
 
-import { useState } from "react"
+import { useState, type SubmitEvent } from "react"
 import { useAuth } from "@/context/AuthContext"
 import supabase from "@/lib/supabase-frontend"
 
@@ -16,7 +16,7 @@ export default function CreateTeam({onClose, onCreated}: CreateTeamProps){
     const [teamName, setTeamName] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
-    async function handleSubmit(e: React.FormEvent){
+    async function handleSubmit(e: SubmitEvent<HTMLFormElement>){
         e.preventDefault();
 
         if(!user) return;

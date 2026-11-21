@@ -5,6 +5,7 @@ import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
 
 import CreateTeam from '@/components/forms/team-creation-form'
+import EditTeam from '@/components/forms/edit-team-form'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { fetchTeamsAndCharacters, type Team } from '@/lib/teams'
@@ -13,7 +14,8 @@ export default function TeamsPage() {
     const {user} = useAuth();
     const [teams, setTeams] = useState<Team[]>([]);
     const [showCreateTeam, setShowCreateTeam] = useState(false);
-
+    const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
+    const editingTeam = teams.find(t => t.id === editingTeamId);
     
     async function loadTeams() {
         if(!user) return;
@@ -44,8 +46,11 @@ export default function TeamsPage() {
                     )}
                     
                     {teams.map(team => (
-                        <TeamCard key = {team.id} name = {team.name} members = {team.members} />
+                        <TeamCard key = {team.id} name = {team.name} members = {team.members} onEdit={() => setEditingTeamId(team.id)} />
                     ))}
+                    {editingTeam && (
+                        <EditTeam team = {editingTeam} onClose={() => setEditingTeamId(null)} />
+                    )}
                 </div>
             <Footer/>
         </>

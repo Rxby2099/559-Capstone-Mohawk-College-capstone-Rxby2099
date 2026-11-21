@@ -1,5 +1,5 @@
 import "./log-reg-form.css"
-import { useState } from "react"
+import { useState, type SubmitEvent } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import supabase from '@/lib/supabase-frontend'
 import { API_URL } from '@/lib/api';
@@ -46,7 +46,7 @@ export default function RegistrationForm() {
      * the username or email they've tried has failed
      * @param e The event to submit the form.
      */
-    async function handleRegistration(e: React.FormEvent) {
+    async function handleRegistration(e: SubmitEvent<HTMLFormElement>) {
         // prevent page refresh
         e.preventDefault();
         // set states to default

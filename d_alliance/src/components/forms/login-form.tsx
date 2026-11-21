@@ -2,7 +2,7 @@
 import "./log-reg-form.css"
 import { Eye, EyeOff } from "lucide-react"
 import supabase from '@/lib/supabase-frontend'
-import { useState } from "react"
+import { useState, type SubmitEvent } from "react"
 import {useNavigate} from "react-router-dom"
 
 /**
@@ -25,7 +25,7 @@ export default function LoginForm() {
      * 
      * @param e The event to submit the form.
      */
-    async function handleUserLogin(e: React.FormEvent){    
+    async function handleUserLogin(e: SubmitEvent<HTMLFormElement>){    
         e.preventDefault();
 
         const {error} = await supabase.auth.signInWithPassword({
