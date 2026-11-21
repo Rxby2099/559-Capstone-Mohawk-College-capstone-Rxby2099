@@ -1,22 +1,25 @@
 import "./edit-profile-form.css";
 import "./edit-team-form.css";
 
+import supabase from "@/lib/supabase-frontend";
 import { useEffect, useState, type SubmitEvent } from "react";
 import { API_URL } from "@/lib/api";
 import type { Team, TeamMember } from "@/lib/teams";
 
 type EditTeamProps = {
     team: Team;
-    onClose?(): void;
+    onClose: () => void;
+    onChanged: () => Promise<void>; 
 };
 
-export default function EditTeam({ team, onClose }: EditTeamProps){
+export default function EditTeam({ team, onClose, onChanged }: EditTeamProps){
     const [selectedSlot, setSelectedSlot] = useState(0);
     const [searchInput, setSearchInput] = useState('');
     const [search, setSearch] = useState('');
     const [results, setResults] = useState<TeamMember[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         if(search === '')return;
@@ -62,8 +65,33 @@ export default function EditTeam({ team, onClose }: EditTeamProps){
         setSearch(searchInput.trim())
     }
 
-    function handlePick(card: TeamMember){
-        console.log(`slot ${selectedSlot} <- card ${card.id}`)
+    async function handlePick(card: TeamMember){
+        for(let i = 0; i < team.members.length; i++){
+            const member = team.members[i];
+            if(member && member.id === card.id && i !== selectedSlot){
+                setError('That card is already on this team');
+                return;
+            }
+        }
+        setSaving(true);
+        setError('');
+
+        const {error: saveError } = await supabase 
+            .from('team_members')
+            .upsert(
+                { team_id: team.id, slot: selectedSlot, card_id: card.id},
+                {onConflict: 'team_id,slot'}
+            );
+
+            setSaving(false);
+
+            if(saveError){
+                console.log("Error saving character", saveError);
+                setError('Could not save that character, pelase try again!');
+                return;
+            }
+
+            await onChanged();
     }
 
     return(
