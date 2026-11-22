@@ -2,6 +2,8 @@ import './profile-page.css'
 
 import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
+import EditTeam from '@/components/forms/edit-team-form/edit-team-form'
+import DeleteTeam from '@/components/forms/delete-team-form/delete-team-form'
 import TeamCard from '../../components/TeamCard/team-card'
 import supabase from '@/lib/supabase-frontend'
 import { useNavigate } from 'react-router-dom'
@@ -24,6 +26,10 @@ export default function ProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [teams, setTeams] = useState<Team[]>([]);
+    const [editingTeamId, setEditingTeamId] = useState<string | null>(null);
+    const editingTeam = teams.find(t => t.id === editingTeamId);
+    const [deletingTeamId, setDeletingTeamId] = useState<string | null>(null)
+    const deletingTeam = teams.find(t => t.id === deletingTeamId);
 
     /**
      * Queries the database to retrieve the users username, email and created_at time
@@ -52,16 +58,16 @@ export default function ProfilePage() {
         fetchProfile();
     }, [user])
 
-    useEffect(() => {
-        if(!user) return;
-        async function loadTeams() {
-            try{
-                setTeams(await fetchTeamsAndCharacters());
-            }
-            catch(error){
-                console.error('Error fetching teams: ', error);
-            }
+    async function loadTeams() {
+        if (!user) return;
+        try {
+            setTeams(await fetchTeamsAndCharacters());
+        } catch (error) {
+            console.error('Error fetching teams: ', error);
         }
+    }
+    
+    useEffect(() => {
         loadTeams();
     }, [user])
 
@@ -113,8 +119,14 @@ export default function ProfilePage() {
                         <div className='teamsSection'>
                             <h3 id = "teamTitle">Teams</h3>
                             {teams.map(team => (
-                                <TeamCard key = {team.id} name = {team.name} members = {team.members} />
+                                <TeamCard key = {team.id} name = {team.name} members = {team.members} onEdit = {() => setEditingTeamId(team.id)} onDelete = {() => setDeletingTeamId(team.id)} />
                             ))}
+                             {editingTeam && (
+                                <EditTeam team = {editingTeam} onClose = {() => setEditingTeamId(null)} onChanged = {loadTeams} />
+                            )}
+                            {deletingTeam && (
+                                <DeleteTeam team = {deletingTeam} onClose={() => setDeletingTeamId(null)} onChanged={loadTeams} />
+                            )}
                         </div>
                     </div>
                     <button id = 'logoutButton' type='button' onClick={handleLogout}>Logout!</button>
