@@ -9,7 +9,7 @@ import { fetchTeamsAndCharacters, type Team } from '@/lib/teams'
 import gokuPic from '../../assets/HiImGoku.jpg'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import EditProfile from '@/components/forms/edit-profile-form'
+import EditProfile from '@/components/forms/edit-profile-form/edit-profile-form'
 
 export default function ProfilePage() {
 

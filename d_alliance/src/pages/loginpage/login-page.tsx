@@ -1,8 +1,8 @@
 import "../../App.css"
 import "./login-page.css"
 
-import LoginForm from "@/components/forms/login-form"
-import RegistrationForm from "@/components/forms/registration-form"
+import LoginForm from "@/components/forms/login-registration-form/login-form"
+import RegistrationForm from "@/components/forms/login-registration-form/registration-form"
 // import Header from "@/components/header-&-footer/header"
 import Footer from "@/components/header-&-footer/footer"
 
