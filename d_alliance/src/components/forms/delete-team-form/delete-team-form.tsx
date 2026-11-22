@@ -37,16 +37,19 @@ export default function DeleteTeam({ team, onClose, onChanged }: DeleteTeamProps
 
     return(
         <div className="modalOverlay">
-            <h3>Are you sure you want to delete this Team?</h3>
-            {error && <p role = "alert">{error}</p>} 
-            <div className="buttonOptions">   
-                <button type = "button" onClick={handleDelete} disabled = {saving}>
-                    Delete Team
-                </button>
-                <button type = "button" onClick = {onClose}>
-                    Cancel
-                </button>
+            <div className = "deleteTeamForm">
+                <h3>Are you sure you want to delete this Team?</h3>
+                {error && <p role = "alert">{error}</p>} 
+                <div className="buttonOptions">   
+                    <button type = "button" onClick={handleDelete} disabled = {saving}>
+                        Delete Team
+                    </button>
+                    <button type = "button" onClick = {onClose}>
+                        Cancel
+                    </button>
+                </div>
             </div>
+            
         </div>
     )
 }
