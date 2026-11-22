@@ -1,5 +1,5 @@
-import "./log-reg-form.css"
-import "./edit-profile-form.css"
+import "../login-registration-form/log-reg-form.css"
+import "../edit-profile-form/edit-profile-form.css"
 import "./team-creation-form.css"
 
 import { useState, type SubmitEvent } from "react"

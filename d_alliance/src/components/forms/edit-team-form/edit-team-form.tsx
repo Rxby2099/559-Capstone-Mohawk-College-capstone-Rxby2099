@@ -1,4 +1,4 @@
-import "./edit-profile-form.css";
+import "../edit-profile-form/edit-profile-form.css"
 import "./edit-team-form.css";
 
 import supabase from "@/lib/supabase-frontend";

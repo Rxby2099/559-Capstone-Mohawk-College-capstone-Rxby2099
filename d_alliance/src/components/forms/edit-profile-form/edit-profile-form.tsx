@@ -1,4 +1,4 @@
-import "./log-reg-form.css"
+import "../login-registration-form/log-reg-form.css"
 import "./edit-profile-form.css"
 
 import { useState } from "react";
