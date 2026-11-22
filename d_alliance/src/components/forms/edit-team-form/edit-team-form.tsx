@@ -148,6 +148,7 @@ export default function EditTeam({ team, onClose, onChanged }: EditTeamProps){
                         onChange={(e) => setSearchInput(e.target.value)}>
                     </input>
                     <button type = "submit">Search</button>
+                    <button type = "button" onClick={onClose}>Close</button>
                 </form>
 
                 {error && <p role = "alert">{error}</p>}
@@ -160,7 +161,7 @@ export default function EditTeam({ team, onClose, onChanged }: EditTeamProps){
                         </button>
                     ))}
                 </div>
-                <button type = "button" onClick={onClose}>Close</button>
+                
             </div>
         </div>
     )
