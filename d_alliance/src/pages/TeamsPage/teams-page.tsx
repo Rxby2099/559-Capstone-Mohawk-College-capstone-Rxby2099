@@ -26,6 +26,11 @@ export default function TeamsPage() {
             console.error('Error fetching teams: ', error);
         }
     }
+
+    // handleDelete(){
+    //     set
+    // }
+
     useEffect(() =>{
         loadTeams();
     }, [user])
@@ -46,10 +51,10 @@ export default function TeamsPage() {
                     )}
                     
                     {teams.map(team => (
-                        <TeamCard key = {team.id} name = {team.name} members = {team.members} onEdit={() => setEditingTeamId(team.id)} />
+                        <TeamCard key = {team.id} name = {team.name} members = {team.members} onEdit = {() => setEditingTeamId(team.id)} />
                     ))}
                     {editingTeam && (
-                        <EditTeam team = {editingTeam} onClose={() => setEditingTeamId(null)} />
+                        <EditTeam team = {editingTeam} onClose = {() => setEditingTeamId(null)} onChanged = {loadTeams} />
                     )}
                 </div>
             <Footer/>
