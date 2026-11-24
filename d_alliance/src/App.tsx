@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthProvider } from './context/AuthContext'
 import SessionRouteLock from './components/RouteLocks/SessionRouteLock'
 import SessionlessRouteLock from './components/RouteLocks/SessionlessLock'
+import AdminRouteLock from './components/RouteLocks/AdminRouteLock'
+import AddCharacterPage from './pages/AddCharPage/add-char-page'
 import "@fontsource/liter";
 import "@fontsource/liter/400.css";
 
@@ -51,6 +53,10 @@ function App() {
 
             <Route path = "/characters/:id" element={
               <SessionRouteLock><CharacterPage/></SessionRouteLock>
+            }/>
+
+            <Route path = "/admin/characters/new" element ={
+              <AdminRouteLock><AddCharacterPage/></AdminRouteLock>
             }/>
 
         </Routes>
