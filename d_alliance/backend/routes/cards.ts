@@ -1,6 +1,6 @@
 import { Router, Request } from 'express';
 import dokkanDb from '../lib/dokkan-db';
-import { getCustomChars } from '../lib/custom-characters.ts';
+import { getCustomChars, type CustomCharacter } from '../lib/custom-characters.ts';
 
 const cardRouter = Router();
 
@@ -40,12 +40,32 @@ const TYPE_DIGIT: Record<string, number> = {agl: 0, teq: 1, int: 2, str: 3, phy:
 const CLASS_DIGIT: Record<string, number> = {super: 1, extreme: 2}
 
 const SORTS: Record<string, string> = {
-    newest: 'cards.open_at DESC, cards.id DESC',
-    oldest: 'cards.open_at ASC, cards.id ASC',
-    alpha: 'cards.name COLLATE NOCASE ASC, cards.id ASC',
-    alphaBack: 'cards.name COLLATE NOCASE DESC, cards.id DESC',
+    newest: 'open_at DESC, id DESC',
+    oldest: 'open_at ASC, id ASC',
+    alpha: 'name COLLATE NOCASE ASC, id ASC',
+    alphaBack: 'name COLLATE NOCASE DESC, id DESC',
 };
 
+const CUSTOM_CTE = `
+WITH custom AS (
+    SELECT
+        json_extract(value, '$.id) AS id,
+        json_extract(value, '$.name) AS name,
+        json_extract(value, '$.title) AS title,
+        json_extract(value, '$.open_at) AS iopen_atd,
+        json_extract(value, '$.element) AS element,
+    FROM json_each(?)
+)`;
+
+function toCustomRow(c: CustomCharacter){
+    return{
+        id: c.id,
+        name: c.name,
+        title: c.title,
+        open_at: c.open_at,
+        element: CLASS_DIGIT[c.class] * 10 + TYPE_DIGIT[c.type]
+    };
+}
 
 
 
@@ -76,6 +96,8 @@ function buildFilters(query: Request['query']){
     const conditions: string[] = [];
     const params: (string | number)[] = [];
 
+    const customConditions: string[] = [];
+    const customParams: (string | number)[] = [];
     // Search matches to either card OR title, and will still recognize
     // chars like % and _ as literal text rather than as the SQL special chars.
     const search = typeof query.search === 'string' ? query.search.trim() : '';
@@ -84,6 +106,9 @@ function buildFilters(query: Request['query']){
         const pattern = `%${search.replace(/[\\%_]/g, '\\$&')}%`
         conditions.push(`(cards.name LIKE ? ESCAPE '\\' OR ls.name LIKE ? ESCAPE '\\')`);
         params.push(pattern, pattern);
+
+        customConditions.push(`(cards.name LIKE ? ESCAPE '\\' OR ls.name LIKE ? ESCAPE '\\')`);
+        customParams.push(pattern, pattern);
     }
 
     const classes = parseList(query.classes, CLASS_DIGIT);
@@ -96,9 +121,12 @@ function buildFilters(query: Request['query']){
 
         if(elements.length === 0){
             conditions.push('0 = 1');
+            customConditions.push('0 = 1');
         }
         else{
             conditions.push(`cards.element IN (${elements.map(() => '?').join(',')})`);
+            customConditions.push(`element IN (${elements.map(() => '?').join(',')})`);
+            customParams.push(...elements);
         }
 
         params.push(...elements);
@@ -110,9 +138,14 @@ function buildFilters(query: Request['query']){
             WHERE cc.card_id = cards.id AND cc.card_category_id = ?)`);
 
         params.push(categoryId);
+
+        customConditions.push('0 = 1');
     }
 
-    return { where: conditions.length ? ` AND ${conditions.join(' AND ')}` : '', params};
+    return { where: conditions.length ? ` AND ${conditions.join(' AND ')}` : '', params,
+            customWhere: customConditions.length ? `AND ${customConditions.join(' AND ')}`: '',
+            customParams
+    };
 }
 
 function parseIds(value: unknown): number[] {
