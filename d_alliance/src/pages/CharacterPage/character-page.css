@@ -2,12 +2,10 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 2%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
 }
 
-.characterContainer > p {
-    text-align: center;
-    color: #CA3500;
-}
 
 .characterContainer h1,
 .characterContainer h3 {
@@ -60,6 +58,10 @@
     line-height: 1.5;
 }
 
+.statsSection {
+    overflow-x: auto;
+}
+
 .statsTable {
     width: 100%;
     border-collapse: collapse;
@@ -70,11 +72,13 @@
     padding: 6px 10px;
     color: #ffffff;
     background-color: #CA3500;
+    overflow-wrap: normal;
 }
 
 .statsTable td {
     padding: 8px 10px;
     border-bottom: 1px solid #CA350033;
+    overflow-wrap: normal;
 }
 
 .statsTable tbody tr:last-child td {
@@ -83,4 +87,28 @@
 
 .statsTable td:first-child {
     text-align: left;
+}
+
+@media (max-width: 560px) {
+    .leaderSkillSection,
+    .statsSection,
+    .superItem,
+    .passiveSection {
+        padding: 10px 12px;
+        border-width: 3px;
+    }
+
+    .leaderSkillSection h3,
+    .statsSection h3,
+    .passiveSection h3,
+    .superItem strong {
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .statsTable th,
+    .statsTable td {
+        padding: 6px 4px;
+        font-size: 14px;
+    }
 }
