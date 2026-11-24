@@ -22,7 +22,7 @@ export default function ProfilePage() {
     }
 
     const navigate = useNavigate();
-    const { user, isAdmin } = useAuth();
+    const { user} = useAuth();
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [teams, setTeams] = useState<Team[]>([]);
