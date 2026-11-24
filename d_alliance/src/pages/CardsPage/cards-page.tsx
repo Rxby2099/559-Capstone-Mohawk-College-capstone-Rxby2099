@@ -2,6 +2,7 @@ import './cards-page.css'
 import { useEffect, useState, type SubmitEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { API_URL } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext'
 
 import Header from '@/components/header-&-footer/header'
 import Footer from '@/components/header-&-footer/footer'
@@ -52,6 +53,7 @@ export default function CardsPage() {
     const [types, setTypes] = useState<string[]>(TYPES);
     const [category, setCategory] = useState('')
     const [categories, setCategories] = useState<Category[]>([]);
+    const { isAdmin } = useAuth();
 
     useEffect(() => {
         fetch(`${API_URL}/api/cards/categories`).then(res => (res.ok ? res.json() : []))
@@ -153,6 +155,9 @@ export default function CardsPage() {
             <div className = "cardPageContainer">
                 {error && <p>{error}</p>}
                 <h1 className='title'>Cards</h1>
+                {isAdmin && (
+                    <Link to='/admin/characters/new' className='addCharacterButton'>Add Character</Link>
+                )}
                 <div className= "searchSection">
                     <form onSubmit={handleSearch}>
                         <label htmlFor='searchBar'>Search</label>

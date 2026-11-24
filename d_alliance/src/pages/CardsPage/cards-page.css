@@ -149,6 +149,26 @@
     margin: 10px;
 }
 
+.addCharacterButton {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    padding: 9px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: var(--accent);
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.addCharacterButton:hover {
+    color: var(--accent);
+    background-color: #ffffff;
+    border-color: var(--accent);
+}
+
 @media (max-width: 900px) {
     .cardList {
         --columns: 2;
