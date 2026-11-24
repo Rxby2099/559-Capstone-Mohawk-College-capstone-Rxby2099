@@ -108,7 +108,7 @@ export function characterRow(form: CharacterFormValues){
         title: form.title.trim(),
         class: form.characterClass,
         type: form.type,
-        leader_skil: form.leaderSkill.trim(),
+        leader_skill: form.leaderSkill.trim(),
         hp_55: Number(form.hp55),
         atk_55: Number(form.atk55),
         def_55: Number(form.def55),
