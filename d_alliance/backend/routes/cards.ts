@@ -1,5 +1,6 @@
 import { Router, Request } from 'express';
 import dokkanDb from '../lib/dokkan-db';
+import { getCustomChars } from '../lib/custom-characters.ts';
 
 const cardRouter = Router();
 
@@ -167,7 +168,7 @@ cardRouter.get('/categories', (_req, res) =>{
     res.json(categories);
 });
 
-cardRouter.get('/by-ids', (req, resp) => {
+cardRouter.get('/by-ids', async (req, resp) => {
     const ids = parseIds(req.query.ids);
 
     if(ids.length === 0){
@@ -180,9 +181,28 @@ cardRouter.get('/by-ids', (req, resp) => {
             cards.name,
             ls.name AS title
         ${FROM_CARDS}
-        WHERE cards.id IN (${ids.map(() => '?').join(',')})`).all(...ids);
+        WHERE cards.id IN (${ids.map(() => '?').join(',')})`).all(...ids) as{
+            id: number; name: string; title: string }[];
     
-        resp.json(data);
+        const results: { id: number; name: string; title: string}[] = [];
+        const customIds = new Set<number>();
+
+        const customChars = await getCustomChars();
+        for(const char of customChars){
+            if(ids.includes(char.id)){
+                results.push({id: char.id, name: char.name, title: char.title});
+                customIds.add(char.id);
+            }
+        }
+
+        for(const card of data){
+            if(!customIds.has(card.id)){
+                results.push(card);
+            }
+        }
+
+        resp.json(results);
+        
 });
 
 export default cardRouter;
