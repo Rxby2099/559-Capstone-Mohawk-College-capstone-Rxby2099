@@ -10,13 +10,15 @@ type AuthContextType = {
     session: Session | null;
     user: User | null;
     loading: boolean;
+    isAdmin: boolean;
 }
 
 // The default values of the context until AuthProvider mounts and supplies it with data
 const AuthContext = createContext<AuthContextType>({
     session: null,
     user: null,
-    loading: true
+    loading: true,
+    isAdmin: false
 });
 
 /**
@@ -51,7 +53,8 @@ export function AuthProvider({children}: { children: ReactNode}){
     const  value: AuthContextType = {
         session,
         user: session?.user ?? null,
-        loading
+        loading,
+        isAdmin: session?.user.app_metadata?.role === 'admin'
     };
 
     return (

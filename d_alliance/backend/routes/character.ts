@@ -1,14 +1,42 @@
 import { Router} from 'express';
 import dokkanDb from '../lib/dokkan-db';
+import supabase from '../supabase-backend';
 
 const characterRouter = Router();
 
 const FROM_CARDS = 'FROM cards JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id';
 
-characterRouter.get('/:id', (req, res) =>{
+characterRouter.get('/:id', async (req, res) =>{
     const id = parseInt(req.params.id, 10);
     if (!Number.isInteger(id) || id <=0){
         return res.status(400).json({error: "Invalid card id"});
+    }
+    
+    const { data: custom, error: customError } = await supabase
+        .from('characters')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+
+    if(customError){
+        console.error('Error reading custom character: ', customError);
+    }
+
+    if(custom){
+        return res.json({
+            id: custom.id,
+            name: custom.name,
+            title: custom.title,
+            leaderSkill: custom.leader_skill,
+            supers: Array.isArray(custom.supers) ? custom.supers : [],
+            passive: custom.passive_name
+                ? { name: custom.passive_name, description: custom.passive_description ?? ''}
+                : undefined,
+            stats: {
+                fiftyFive: { hp: custom.hp_55, atk: custom.atk_55, def: custom.def_55 },
+                rainbow: { hp: custom.hp_rainbow, atk: custom.atk_rainbow, def: custom.def_rainbow }
+            }
+        });
     }
 
     // Quert to get a chatcayers name, title, leaderskill description, stats at full level, their hidden potential board id, and their passive id
