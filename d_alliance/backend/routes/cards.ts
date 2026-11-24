@@ -49,11 +49,11 @@ const SORTS: Record<string, string> = {
 const CUSTOM_CTE = `
 WITH custom AS (
     SELECT
-        json_extract(value, '$.id) AS id,
-        json_extract(value, '$.name) AS name,
-        json_extract(value, '$.title) AS title,
-        json_extract(value, '$.open_at) AS iopen_atd,
-        json_extract(value, '$.element) AS element,
+        json_extract(value, '$.id') AS id,
+        json_extract(value, '$.name') AS name,
+        json_extract(value, '$.title') AS title,
+        json_extract(value, '$.open_at') AS open_at,
+        json_extract(value, '$.element') AS element
     FROM json_each(?)
 )`;
 
@@ -62,7 +62,7 @@ function toCustomRow(c: CustomCharacter){
         id: c.id,
         name: c.name,
         title: c.title,
-        open_at: c.open_at,
+        open_at: new Date(c.open_at).toISOString().slice(0, 19).replace('T', ' '),
         element: CLASS_DIGIT[c.class] * 10 + TYPE_DIGIT[c.type]
     };
 }
@@ -107,7 +107,7 @@ function buildFilters(query: Request['query']){
         conditions.push(`(cards.name LIKE ? ESCAPE '\\' OR ls.name LIKE ? ESCAPE '\\')`);
         params.push(pattern, pattern);
 
-        customConditions.push(`(cards.name LIKE ? ESCAPE '\\' OR ls.name LIKE ? ESCAPE '\\')`);
+        customConditions.push(`(name LIKE ? ESCAPE '\\' OR title LIKE ? ESCAPE '\\')`);
         customParams.push(pattern, pattern);
     }
 
@@ -143,7 +143,7 @@ function buildFilters(query: Request['query']){
     }
 
     return { where: conditions.length ? ` AND ${conditions.join(' AND ')}` : '', params,
-            customWhere: customConditions.length ? `AND ${customConditions.join(' AND ')}`: '',
+            customWhere: customConditions.length ? ` AND ${customConditions.join(' AND ')}`: '',
             customParams
     };
 }
@@ -160,19 +160,31 @@ function parseIds(value: unknown): number[] {
  * Grabs one page of 100 playable cards from newest to oldest. The frontend
  * requests the next or previous page.
  */
-cardRouter.get('/', (req, resp) => {
+cardRouter.get('/', async (req, resp) => {
     // converts query param into an int to validate the page number
     const requested = parseInt(req.query.page as string, 10);
     const page = Number.isInteger(requested) && requested > 0 ? requested : 1;
-    const { where, params } = buildFilters(req.query);
+    const { where, params, customWhere, customParams } = buildFilters(req.query);
 
     const sortKey = typeof req.query.sort === 'string' ? req.query.sort: '';
     const orderBy = has(SORTS, sortKey) ? SORTS[sortKey] : SORTS.newest;
 
+    const customChars = await getCustomChars();
+    const customJson = JSON.stringify(customChars.map(toCustomRow));
+
+    const combined = `
+    SELECT cards.id AS id, cards.name AS name, ls.name AS title, cards.open_at AS open_at
+    ${FROM_CARDS}
+    WHERE ${PLAYABLE_FILTER}${where}
+        AND cards.id NOT IN (SELECT id FROM custom)
+    UNION ALL
+    SELECT id, name, title, open_at FROM custom WHERE 1 = 1${customWhere}`;
+
+    const allParams = [customJson, ...params, ...customParams];
     // counts every matching card to find out how many pages exist
     const { total } = dokkanDb
-        .prepare(`SELECT COUNT(*) AS total ${FROM_CARDS} WHERE ${PLAYABLE_FILTER}${where}`)
-        .get(...params) as { total: number}; 
+        .prepare(`${CUSTOM_CTE} SELECT COUNT(*) AS total FROM (${combined})`)
+        .get(...allParams) as { total: number}; 
 
     // Round up so that the last page still shows cards even if there isnt 100
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -180,14 +192,10 @@ cardRouter.get('/', (req, resp) => {
     // Select statement to grab the id, name, and title from each card, specifigically 
     // ones with valid leader skills (has a leader skill) offsetting by 100 on each next click
     const data = dokkanDb.prepare(`
-        SELECT 
-            cards.id,
-            cards.name,
-            ls.name AS title
-        ${FROM_CARDS}
-        WHERE ${PLAYABLE_FILTER}${where}
+        ${CUSTOM_CTE}
+        SELECT id, name, title FROM (${combined})
         ORDER BY ${orderBy}
-        LIMIT ? OFFSET ?`).all(...params, PAGE_SIZE, (page - 1) * PAGE_SIZE);
+        LIMIT ? OFFSET ?`).all(...allParams, PAGE_SIZE, (page - 1) * PAGE_SIZE);
     
     resp.json({ data, page, pageSize: PAGE_SIZE, total, totalPages })
 });
