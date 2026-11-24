@@ -55,7 +55,7 @@ export function validateCharacterForm(form: CharacterFormValues): string{
 
     // Name and Title Length
     if(form.name.trim().length > 100 || form.title.length > 100){
-        return 'Name and title must be ';
+        return 'Name and title must be 100 characters or less';
     }
 
     // Leader Skill
@@ -118,5 +118,60 @@ export function characterRow(form: CharacterFormValues){
         supers,
         passive_name: form.passiveName.trim() || null,
         passive_description: form.passiveDescription.trim() || null
+    };
+}
+
+export type CharacterData = {
+    id: number;
+    name: string;
+    title: string;
+    leaderSkill: string;
+    supers: { style: string; kiNeeded: number; name: string; description: string }[];
+    passive?: { name: string; description: string } | null;
+    stats: {
+        fiftyFive: { hp: number; atk: number; def: number };
+        rainbow: { hp: number; atk: number; def: number };
+    };
+    class: string;
+    type: string;
+    openAt: string;
+}
+
+/**
+ * Checks whether a character fits the standard 12 ki 18 ki super attacks and if not wont allow them to be editted
+ * @param character character being assessed for editing
+ * @returns a boolean on wether the character can be editted or not.
+ */
+export function canEditInForm(character: CharacterData): boolean{
+    const { supers } = character;
+
+    if(supers.length === 0 || supers.length > 2) return false;
+    if(supers[0].kiNeeded !== 12) return false;
+
+    return supers.length === 1 || supers[1].kiNeeded === 18;
+}
+
+export function ConvertCharToForm(c: CharacterData): CharacterFormValues{
+    const [normal, ultra] = c.supers;
+
+    return{
+        name: c.name,
+        title: c.title,
+        characterClass: c.class,
+        type: c.type,
+        leaderSkill: c.leaderSkill,
+        hp55: String(c.stats.fiftyFive.hp),
+        atk55: String(c.stats.fiftyFive.atk),
+        def55: String(c.stats.fiftyFive.def),
+        hpRainbow: String(c.stats.rainbow.hp),
+        atkRainbow: String(c.stats.rainbow.atk),
+        defRainbow: String(c.stats.rainbow.def),
+        superName: normal.name,
+        superDescription: normal.description,
+        hasUltra: ultra !== undefined,
+        ultraName: ultra?.name ?? '',
+        ultraDescription: ultra?.description ?? '',
+        passiveName: c.passive?.name ?? '',
+        passiveDescription: c.passive?.description ?? ''
     };
 }

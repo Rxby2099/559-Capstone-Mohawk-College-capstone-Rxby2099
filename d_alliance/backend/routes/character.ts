@@ -5,6 +5,8 @@ import supabase from '../supabase-backend';
 const characterRouter = Router();
 
 const FROM_CARDS = 'FROM cards JOIN leader_skill_sets ls ON ls.id = cards.leader_skill_set_id';
+const CLASS_NAMES = ['', 'super', 'extreme']
+const TYPE_NAMES = ['agl', 'teq', 'int', 'str', 'phy'];
 
 characterRouter.get('/:id', async (req, res) =>{
     const id = parseInt(req.params.id, 10);
@@ -35,7 +37,10 @@ characterRouter.get('/:id', async (req, res) =>{
             stats: {
                 fiftyFive: { hp: custom.hp_55, atk: custom.atk_55, def: custom.def_55 },
                 rainbow: { hp: custom.hp_rainbow, atk: custom.atk_rainbow, def: custom.def_rainbow }
-            }
+            },
+            class: custom.class,
+            type: custom.type,
+            openAt: custom.open_at
         });
     }
 
@@ -50,7 +55,9 @@ characterRouter.get('/:id', async (req, res) =>{
             cards.atk_max AS atk,
             cards.def_max AS def,
             cards.potential_board_id AS boardId,
-            cards.passive_skill_set_id AS passiveId
+            cards.passive_skill_set_id AS passiveId,
+            cards.element,
+            cards.open_at AS openAt
         ${FROM_CARDS}
         WHERE cards.id = ?`).get(id) as any;
     
@@ -105,7 +112,10 @@ characterRouter.get('/:id', async (req, res) =>{
                     def: character.def + rainbowStats.def
                 },
 
-            }
+            },
+            class: CLASS_NAMES[Math.floor(character.element / 10)],
+            type: TYPE_NAMES[character.element % 10],
+            openAt: character.openAt
         });
 });
 
