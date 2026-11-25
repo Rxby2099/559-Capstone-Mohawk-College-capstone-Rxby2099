@@ -89,6 +89,26 @@
     text-align: left;
 }
 
+.editCharacterButton {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 1rem;
+    padding: 9px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #CA3500;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.editCharacterButton:hover {
+    color: #CA3500;
+    background-color: #ffffff;
+    border-color: #CA3500;
+}
+
 @media (max-width: 560px) {
     .leaderSkillSection,
     .statsSection,

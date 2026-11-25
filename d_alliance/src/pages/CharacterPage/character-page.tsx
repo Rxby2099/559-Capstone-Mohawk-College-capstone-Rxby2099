@@ -2,15 +2,17 @@ import './character-page.css'
 import { API_URL } from '@/lib/api';
 import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { use, useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom';
 import { type CharacterData } from '@/lib/character-form';
+import { useAuth } from '@/context/AuthContext';
 
 export default function CharacterPage() {
     const {id} = useParams();
     const [character, setCharacter] = useState<CharacterData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { isAdmin } = useAuth();
 
     useEffect(() => {
         let cancelled = false;
@@ -57,6 +59,11 @@ export default function CharacterPage() {
                     <div>
                         <h1 className='characterTitle'>{character.title}</h1>
                         <h1 className='characterName'>{character.name}</h1>
+                        {isAdmin && (
+                            <Link to={`/admin/characters/${character.id}/edit`} className='editCharacterButton'>
+                                Edit Character
+                            </Link>
+                        )}
                         <br></br>
                         <div className='leaderSkillSection'>
                             <h3>--Leader Skill--</h3>
