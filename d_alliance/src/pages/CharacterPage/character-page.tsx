@@ -4,39 +4,11 @@ import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-
-type Stats = { 
-    hp: number; 
-    atk: number; 
-    def: number
-};
-
-type Super = { 
-    style: string; 
-    kiNeeded: number; 
-    name: string; 
-    description: string
-};
-
-type Character = {
-    id: number;
-    name: string;
-    title: string;
-    leaderSkill: string;
-    supers: Super[];
-    passive: {
-        name: string;
-        description: string;
-    } | undefined
-    stats: { 
-        fiftyFive: Stats;
-        rainbow: Stats;
-    }
-}
+import { type CharacterData } from '@/lib/character-form';
 
 export default function CharacterPage() {
     const {id} = useParams();
-    const [character, setCharacter] = useState<Character | null>(null);
+    const [character, setCharacter] = useState<CharacterData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +25,7 @@ export default function CharacterPage() {
                     throw new Error(res.status === 404 ? 'Character not found' : `Request failed (${res.status})`)
                 }
 
-                const json: Character = await res.json();
+                const json: CharacterData = await res.json();
 
                 if(cancelled) return;
                 setCharacter(json)

@@ -59,6 +59,10 @@ function App() {
               <AdminRouteLock><AddCharacterPage/></AdminRouteLock>
             }/>
 
+            <Route path = "/admin/characters/:id/edit" element ={
+              <AdminRouteLock><AddCharacterPage/></AdminRouteLock>
+            }/>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -1,11 +1,12 @@
 import './add-char-page.css';
 
-import { useState, type ChangeEvent, type SubmitEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, type ChangeEvent, type SubmitEvent } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { API_URL } from '@/lib/api';
 import supabase from '@/lib/supabase-frontend';
 import Header from "@/components/header-&-footer/header";
 import Footer from "@/components/header-&-footer/footer";
-import { EMPTY_FORM, validateCharacterForm, characterRow, type CharacterFormValues } from '@/lib/character-form';
+import { EMPTY_FORM, validateCharacterForm, characterRow, canEditInForm, ConvertCharToForm type CharacterFormValues, type CharacterData} from '@/lib/character-form';
 
 const STAT_FIELDS = [
     {name: 'hp55', label: '55% HP'},
@@ -21,6 +22,41 @@ export default function AddCharacterPage(){
     const [form, setForm] = useState<CharacterFormValues>(EMPTY_FORM);
     const [saving, setSaving] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const { id } = useParams();
+    const isEdit = id !== undefined;
+    const [loading, setLoading] = useState(isEdit);
+    const [loadError, setLoadError] = useState('');
+
+    useEffect(() => {
+        if(!id) return;
+        let cancelled = false;
+
+        async function loadCharacter(){
+            try{
+                const res = await fetch(`${API_URL}/api/character/${id}`);
+                if(!res.ok) throw new Error('Character not found');
+                const data: CharacterData = await res.json();
+                if(cancelled) return;
+
+                if(!canEditInForm(data)){
+                    setLoadError("This character's super attacks can't be edited in the form");
+                }
+                else{
+                    setForm(ConvertCharToForm(data));
+                }
+            }
+            catch(err){
+                console.error('Error loading character: ', err);
+                if(!cancelled) setLoadError ('Could not load the character');
+            }
+            finally{
+                if(!cancelled) setLoading(false);
+            }
+        }
+
+        loadCharacter();
+        return () => {cancelled = true; };
+    }, [id]);
 
     function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>){
         const { name, value } = e.target;
