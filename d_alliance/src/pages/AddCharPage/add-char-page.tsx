@@ -6,7 +6,7 @@ import { API_URL } from '@/lib/api';
 import supabase from '@/lib/supabase-frontend';
 import Header from "@/components/header-&-footer/header";
 import Footer from "@/components/header-&-footer/footer";
-import { EMPTY_FORM, validateCharacterForm, characterRow, canEditInForm, ConvertCharToForm type CharacterFormValues, type CharacterData} from '@/lib/character-form';
+import { EMPTY_FORM, validateCharacterForm, characterRow, canEditInForm, ConvertCharToForm, type CharacterFormValues, type CharacterData} from '@/lib/character-form';
 
 const STAT_FIELDS = [
     {name: 'hp55', label: '55% HP'},
@@ -26,6 +26,7 @@ export default function AddCharacterPage(){
     const isEdit = id !== undefined;
     const [loading, setLoading] = useState(isEdit);
     const [loadError, setLoadError] = useState('');
+    const [openAt, setOpenAt] = useState('')
 
     useEffect(() => {
         if(!id) return;
@@ -43,6 +44,7 @@ export default function AddCharacterPage(){
                 }
                 else{
                     setForm(ConvertCharToForm(data));
+                    setOpenAt(data.openAt);
                 }
             }
             catch(err){
@@ -74,6 +76,23 @@ export default function AddCharacterPage(){
 
         setSaving(true);
         setErrMsg('');
+        
+        if(isEdit){
+            const { error } = await supabase
+                .from('characters')
+                .upsert({ id: Number(id), open_at: openAt, ...characterRow(form) });
+        
+            setSaving(false);
+        
+            if(error){
+                console.error('Error saving character: ', error);
+                setErrMsg('Could not save the changes, please try again!');
+                return;
+            }
+        
+            navigate(`/characters/${id}`);
+            return;
+        }
 
         const {data, error } = await supabase
             .from('characters')
@@ -92,11 +111,20 @@ export default function AddCharacterPage(){
         navigate(`/characters/${data.id}`);
     }
     
+    if(isEdit && (loading || loadError)){
+        return(
+            <>
+                <Header/>
+                <p role = 'alert'>{loading ? 'Loading character...': loadError}</p>
+                <Footer/>
+            </>
+        )
+    }
     return(
         <>
             <Header/>
                 <div className="characterFormContainer">
-                    <h1 className='characterFormTitle'>Add Character</h1>
+                    <h1 className='characterFormTitle'>{isEdit ? 'Edit Character' : 'Add Character'}</h1>
 
                     <form className='characterForm' onSubmit={handleSubmit}>
                         <label htmlFor='name'>Name</label>
@@ -177,7 +205,7 @@ export default function AddCharacterPage(){
 
                         {errMsg && <p role = 'alert'>{errMsg}</p>}
 
-                        <button type = 'submit' disabled = {saving}>Create Character</button>
+                        <button type = 'submit' disabled = {saving}>{isEdit ? 'Save Changes' : 'Create Character'}</button>
                     </form>
                 </div>
             <Footer/>
