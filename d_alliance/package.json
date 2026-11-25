@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "start": "tsx backend/backend.ts",
     "test:api": "newman run Tests/postman/dokkan-api.postman_collection.json",
-    "test:api:live": "newman run Tests/postman/dokkan-api.postman_collection.json --env-var baseUrl=https://five59-capstone-mohawk-college-capstone.onrender.com"
+    "test:api:live": "newman run Tests/postman/dokkan-api.postman_collection.json --env-var baseUrl=https://five59-capstone-mohawk-college-capstone.onrender.com",
+    "test:api:supabase": "newman run Tests/postman/supabase-api.postman_collection.json -e Tests/postman/supabase.env"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
