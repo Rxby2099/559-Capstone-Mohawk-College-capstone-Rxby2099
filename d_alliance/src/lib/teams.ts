@@ -69,6 +69,7 @@ export async function fetchTeamsAndCharacters(): Promise<Team[]> {
     for (const row of rows){
         const members = new Array<TeamMember | null>(TEAM_SIZE).fill(null);
         for (const member of row.team_members) {
+            if (member.slot < 0 || member.slot >= TEAM_SIZE) continue;
             members[member.slot] = cardsById.get(member.card_id) ?? null;
         }
         teams.push({id: row.id, name: row.name, members});
