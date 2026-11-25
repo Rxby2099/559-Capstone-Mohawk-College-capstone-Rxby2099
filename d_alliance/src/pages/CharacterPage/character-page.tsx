@@ -2,7 +2,7 @@ import './character-page.css'
 import { API_URL } from '@/lib/api';
 import Header from '../../components/header-&-footer/header'
 import Footer from '../../components/header-&-footer/footer'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import { type CharacterData } from '@/lib/character-form';
 import { useAuth } from '@/context/AuthContext';
